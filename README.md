@@ -1,2 +1,2 @@
 # Rocket-Watcher
-A React Native app for tracking when Rocket Launches are
+A React Native app for tracking when Rocket Launches are.
