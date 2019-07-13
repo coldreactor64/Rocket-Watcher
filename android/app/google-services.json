@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "25976946374",
+    "firebase_url": "https://rocket-watcher.firebaseio.com",
+    "project_id": "rocket-watcher",
+    "storage_bucket": "rocket-watcher.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:25976946374:android:d6ff9be4a1687af0",
+        "android_client_info": {
+          "package_name": "com.coldreactor.rocketwatcher"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "25976946374-qguihi9slomlf8l9pr6cdvulm7o2uqbm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB27kEp2HyAijlWymKdYHsjMOjDhYunbaU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "25976946374-qguihi9slomlf8l9pr6cdvulm7o2uqbm.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "25976946374-gs5n16fsp971lh6i9hlpa9bljesu932o.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.coldreactor.rocketwatcher"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
