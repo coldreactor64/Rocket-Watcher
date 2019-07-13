@@ -5,6 +5,9 @@ import LinearGradient from "react-native-linear-gradient";
 import {compose} from 'redux'
 import {connect} from 'react-redux'
 import styled from 'styled-components'
+
+
+import NewsList from './Components/NewsList'
 import CalendarCard from './Components/CalendarCard'
 import {updateNews, loadMoreNews} from '../redux/actions/newsActions'
 
@@ -42,6 +45,8 @@ class Home extends React.Component {
                   />
               </Outline>
             <Header> Spaceflight News</Header>
+            <NewsList
+            />
         </Container>
       </Background>
     );

@@ -1,22 +1,20 @@
 import React, { PureComponent } from 'react'
 import { Text, View, FlatList, TouchableOpacity } from 'react-native'
 import styled from 'styled-components';
-import FontAwesome from 'react-native-vector-icons/FontAwesome'
-
 
 export default class NewsList extends PureComponent {
     constructor(props){
         super(props);
         this.state = {
             defaultData: [{
-                "id": "0001",
-                "Location":"N/A",
-                "Name": "Launch Data Unavailable",
-                "Time": "N/A"
+                "_id": "0001",
+                "title":"Loading News",
+                "url": "https://spaceflightnewsapi.net/",
+                "date_published": 1562974611
               }]
         }
     }
-    _keyExtractor = (item, index) => item.id;
+    _keyExtractor = (item, index) => item._id;
     
     _onPressItem = (id) => {
         let data = this.props.data.find(item => item.id === id);
@@ -27,16 +25,21 @@ export default class NewsList extends PureComponent {
         this.props.NotificationPressed(id);
     }
     
-    _renderItem = ({item}) => (
-    <NewsListItem
+    _renderItem = ({item}) => {
+    const timeNow = new Date().getTime() / 1000;
+    const timeDifference = timeNow - item.date_published;
+    const daysDifference = Math.floor(timeDifference / 60 / 60 / 24);
+    const timePosted = daysDifference > 0 ? `${daysDifference}d ago` : "Today";
+    return(
+        <NewsListItem
         id = {item.id}
-        name = {item.Name}
-        location = {item.Location}
-        time = {item.Time}
+        title = {item.title}
+        time = {timePosted}
         onPressItem={this._onPressItem}
-        onPressNotification={this._onPressNotification}
-    />
-    );
+        />
+    )
+    }
+
 
     render() {
         return (
@@ -51,9 +54,13 @@ export default class NewsList extends PureComponent {
 
 class NewsListItem extends PureComponent{
 
+
+    
     constructor(props){
         super(props);
     }
+
+    _
 
     _onPressCard = () => {
         this.props.onPressItem(this.props.id);
@@ -68,34 +75,15 @@ class NewsListItem extends PureComponent{
             <CardView>
                 <CardTouch onPress={this._onPressCard} testID={"CardTouch"}>
                     <Card>
-                        <LaunchName>{this.props.name}</LaunchName>
-                        <LaunchLocation>{this.props.location}</LaunchLocation>
-                        <LaunchTime>{this.props.time}</LaunchTime>
+                        <NewsTitle>{this.props.title}</NewsTitle>
+                        <NewsTime>{this.props.time}</NewsTime>
                     </Card>
                 </CardTouch>
-                <NotifyTouch testID={"NotifyTouch"} onPress= {this._onPressNotification}>
-                <Star
-                name = "star-o"
-                size = {26}
-                color = "#fff"
-                iconStyle = {{textAlign: 'right'}}
-                />
-                </NotifyTouch>
             </CardView>
         )
     }
 }
 
-
-const Star =  styled(FontAwesome)`
-flex-direction: column;
-flex: 1;
-align-self: flex-end;
-justify-content: flex-end;
-text-align: right;
-margin-right: 6px;
-margin-top: 4px;
-`
 
 
 const CardView = styled.View`
@@ -110,17 +98,14 @@ elevation: 17;
 `
 
 const CardTouch = styled.TouchableOpacity`
-flex: .9;
+flex: 1;
 `
 
-const NotifyTouch = styled.TouchableOpacity`
-flex: .1;
-`
 
 const Card = styled.View`
 `
 
-const LaunchName = styled.Text`
+const NewsTitle = styled.Text`
 color: #FFF;
 font-size: 16px;
 margin-top: 2px;
@@ -129,16 +114,8 @@ margin-bottom: 1px;
 font-family: 'Montserrat-Bold';
 `
 
-const LaunchLocation = styled.Text`
-color: #FFF;
-font-size: 13px;
-margin-left: 6px;
-padding: 1px;
-font-family: 'Montserrat-Regular';
-text-align: left;
-`
 
-const LaunchTime = styled.Text`
+const NewsTime = styled.Text`
 color: #FFF;
 font-size: 13px;
 margin-left: 6px;

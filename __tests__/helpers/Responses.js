@@ -310,3 +310,9 @@ export const news = [
       "featured_image": "https://www.nasaspaceflight.com/wp-content/uploads/2019/07/NSF-2019-07-12-17-26-42-144.jpg"
   }
 ]
+
+
+const defaultData = {"_id": "0001",
+"title":"Loading News",
+"url": "https://spaceflightnewsapi.net/",
+"Time": 1562974611}
