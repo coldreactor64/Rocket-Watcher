@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 
 
-export default class LaunchList extends PureComponent {
+export default class NewsList extends PureComponent {
     constructor(props){
         super(props);
         this.state = {
@@ -28,7 +28,7 @@ export default class LaunchList extends PureComponent {
     }
     
     _renderItem = ({item}) => (
-    <LaunchListItem
+    <NewsListItem
         id = {item.id}
         name = {item.Name}
         location = {item.Location}
@@ -49,7 +49,7 @@ export default class LaunchList extends PureComponent {
     }
 }
 
-class LaunchListItem extends PureComponent{
+class NewsListItem extends PureComponent{
 
     constructor(props){
         super(props);

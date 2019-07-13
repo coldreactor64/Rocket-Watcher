@@ -20,7 +20,7 @@ class Calendar extends React.Component {
   render() {
     return (
     <View>
-      <Text>Calendar</Text>
+      <Text>News</Text>
     </View>
     );
   }

@@ -5,8 +5,8 @@ import LinearGradient from "react-native-linear-gradient";
 import {compose} from 'redux'
 import {connect} from 'react-redux'
 import styled from 'styled-components'
-import LaunchList from './Components/LaunchList'
-
+import CalendarCard from './Components/CalendarCard'
+import {updateNews, loadMoreNews} from '../redux/actions/newsActions'
 
 class Home extends React.Component {
   constructor() {
@@ -15,10 +15,11 @@ class Home extends React.Component {
   }
 
   async componentDidMount() {
-
+    this.props.updateNews();
   }
 
   _CardPressed = (id) => {
+    this.props.loadMoreNews(this.props.news.news)
     console.log(id);
   }
 
@@ -34,7 +35,7 @@ class Home extends React.Component {
         <Container>
             <Header>Launch Schedule</Header>
               <Outline>
-                  <LaunchList
+                  <Calendar
                   data={this.props.launches}
                   CardPressed = {this._CardPressed}
                   NotificationPressed = {this._NotificationPressed}
@@ -51,7 +52,7 @@ const Background = styled(LinearGradient)`
 flex: 1;
 `
 
-const LaunchList = styled(LaunchListCard)`
+const Calendar = styled(CalendarCard)`
 `
 
 const Header = styled.Text`
@@ -84,13 +85,17 @@ function mapStateToProps(state) {
   return {
     firebase: state.firebase,
     firestore: state.firestore,
-    launches: state.firestore.ordered.launches
+    launches: state.firestore.ordered.launches,
+    news: state.news
   };
 }
 
 export default compose(
 firestoreConnect(['launches']),
-connect(mapStateToProps)
+connect(mapStateToProps, {
+  updateNews,
+  loadMoreNews
+})
 )(Home)
 
 
