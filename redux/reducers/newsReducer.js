@@ -4,9 +4,7 @@ LOAD_MORE_NEWS
 } from "../actions/actionTypes";
 
 let initialState = {
-    news: {
-
-    }
+    news: []
 }
 
 export default (state = initialState, action) => {
