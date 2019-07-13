@@ -1,25 +1,25 @@
 
 import React from 'react'
-import CalendarCard from '../../../screens/Components/CalendarCard'
+import LaunchList from '../../../screens/Components/LaunchList'
 import { render, fireEvent } from 'react-native-testing-library';
 import {LaunchData} from "../../helpers/componentData"
 
 test('CalenderCard renders data correctly', () => {
-    const {getAllByText} = render(<CalendarCard data={LaunchData}/>)
+    const {getAllByText} = render(<LaunchList data={LaunchData}/>)
     expect(getAllByText("RandomTime")).toHaveLength(3);
     expect(getAllByText("LC 39A, Kennedy Space Center")).toHaveLength(3);
     expect(getAllByText("CRS-17")).toHaveLength(3);
 });
 
-test('CalendarCard renders default data in absensce of data', () => {
-  const {getAllByText} = render(<CalendarCard/>)
+test('LaunchList renders default data in absensce of data', () => {
+  const {getAllByText} = render(<LaunchList/>)
   expect(getAllByText("N/A")).toHaveLength(2);
   expect(getAllByText("Launch Data Unavailable")).toHaveLength(1);
 });
 
-test('CalendarCard calls correct function when card is clicked', () => {
+test('LaunchList calls correct function when card is clicked', () => {
   const onPress = jest.fn();
-  const {getAllByTestId} = render(<CalendarCard 
+  const {getAllByTestId} = render(<LaunchList 
     CardPressed = {onPress}
     data = {LaunchData} 
   />)
@@ -28,9 +28,9 @@ test('CalendarCard calls correct function when card is clicked', () => {
   expect(onPress).toHaveBeenCalledTimes(1);//Should be called once
 });
 
-test('CalendarCard calls correct function when notification is clicked', () => {
+test('LaunchList calls correct function when notification is clicked', () => {
   const onPress = jest.fn();
-  const {getAllByTestId} = render(<CalendarCard 
+  const {getAllByTestId} = render(<LaunchList 
     NotificationPressed = {onPress}
     data = {LaunchData} 
   />)

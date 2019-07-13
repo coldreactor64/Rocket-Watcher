@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 
 
-export default class CalendarCard extends PureComponent {
+export default class LaunchList extends PureComponent {
     constructor(props){
         super(props);
         this.state = {
@@ -28,7 +28,7 @@ export default class CalendarCard extends PureComponent {
     }
     
     _renderItem = ({item}) => (
-    <CalendarCardItem
+    <LaunchListItem
         id = {item.id}
         name = {item.Name}
         location = {item.Location}
@@ -49,7 +49,7 @@ export default class CalendarCard extends PureComponent {
     }
 }
 
-class CalendarCardItem extends PureComponent{
+class LaunchListItem extends PureComponent{
 
     constructor(props){
         super(props);

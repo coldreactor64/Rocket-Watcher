@@ -5,7 +5,7 @@ import LinearGradient from "react-native-linear-gradient";
 import {compose} from 'redux'
 import {connect} from 'react-redux'
 import styled from 'styled-components'
-import CalendarCard from './Components/CalendarCard'
+import LaunchList from './Components/LaunchList'
 
 
 class Home extends React.Component {
@@ -34,7 +34,7 @@ class Home extends React.Component {
         <Container>
             <Header>Launch Schedule</Header>
               <Outline>
-                  <Calendar
+                  <LaunchList
                   data={this.props.launches}
                   CardPressed = {this._CardPressed}
                   NotificationPressed = {this._NotificationPressed}
@@ -51,7 +51,7 @@ const Background = styled(LinearGradient)`
 flex: 1;
 `
 
-const Calendar = styled(CalendarCard)`
+const LaunchList = styled(LaunchListCard)`
 `
 
 const Header = styled.Text`
