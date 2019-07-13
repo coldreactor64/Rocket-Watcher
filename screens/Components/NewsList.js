@@ -7,39 +7,58 @@ export default class NewsList extends PureComponent {
         super(props);
         this.state = {
             defaultData: [{
-                "_id": "0001",
+                "_id": "5d28f8c53212d0d7323729d2",
                 "title":"Loading News",
                 "url": "https://spaceflightnewsapi.net/",
-                "date_published": 1562974611
-              }]
+                "date_published": 1562974611,
+                "news_site_long": "SpaceflightNewsAPI"
+              }],
+            refreshing: true
         }
     }
+
+
     _keyExtractor = (item, index) => item._id;
     
     _onPressItem = (id) => {
-        let data = this.props.data.find(item => item.id === id);
-        this.props.CardPressed(id);
-      };
+        this.props.newsPressed(id);
+    };
     
-    _onPressNotification = (id) =>{
-        this.props.NotificationPressed(id);
+    _loadMore = () => this.props.loadMore();
+
+
+    _refresh = () => {
+        this.setState({
+            refreshing: true
+        })
+            
+        this.props.refresh();
     }
+
+
     
     _renderItem = ({item}) => {
     const timeNow = new Date().getTime() / 1000;
     const timeDifference = timeNow - item.date_published;
     const daysDifference = Math.floor(timeDifference / 60 / 60 / 24);
     const timePosted = daysDifference > 0 ? `${daysDifference}d ago` : "Today";
+
     return(
         <NewsListItem
-        id = {item.id}
+        id = {item._id}
         title = {item.title}
         time = {timePosted}
+        site = {item.news_site_long}
         onPressItem={this._onPressItem}
         />
     )
     }
 
+    componentDidUpdate() {
+        this.setState({
+        refreshing: false
+        })
+    }
 
     render() {
         return (
@@ -47,6 +66,13 @@ export default class NewsList extends PureComponent {
                 data={this.props.data ? this.props.data : this.state.defaultData}
                 keyExtractor={this._keyExtractor}
                 renderItem={this._renderItem}
+
+                onRefresh={this._refresh}
+                refreshing={this.state.refreshing}
+
+                onEndReached={this._loadMore}
+                onEndReachedThreshold={0.5}
+                initialNumToRender={1}
             />
         )
     }
@@ -60,14 +86,9 @@ class NewsListItem extends PureComponent{
         super(props);
     }
 
-    _
-
     _onPressCard = () => {
+        console.log(this.props.id);
         this.props.onPressItem(this.props.id);
-    }
-
-    _onPressNotification = () =>{
-        this.props.onPressNotification(this.props.id);
     }
     
     render() {
@@ -76,7 +97,7 @@ class NewsListItem extends PureComponent{
                 <CardTouch onPress={this._onPressCard} testID={"CardTouch"}>
                     <Card>
                         <NewsTitle>{this.props.title}</NewsTitle>
-                        <NewsTime>{this.props.time}</NewsTime>
+                        <NewsTime>{this.props.site} - {this.props.time}</NewsTime>
                     </Card>
                 </CardTouch>
             </CardView>
@@ -110,15 +131,19 @@ color: #FFF;
 font-size: 16px;
 margin-top: 2px;
 margin-left: 6px;
-margin-bottom: 1px;
-font-family: 'Montserrat-Bold';
+margin-right: 6px;
+margin-bottom: 10px;
+text-align: center;
+font-family: 'Montserrat-Regular';
 `
 
 
 const NewsTime = styled.Text`
 color: #FFF;
-font-size: 13px;
+font-size: 12px;
 margin-left: 6px;
+margin-right: 6px;
 padding: 1px;
-font-family: 'Montserrat-Regular';
+text-align: center;
+font-family: 'Montserrat-Bold';
 `

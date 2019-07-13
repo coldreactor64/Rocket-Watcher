@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Platform, Image, Text, View, ScrollView, TouchableOpacity } from 'react-native';
+import { Linking } from 'react-native';
 import { firestoreConnect } from 'react-redux-firebase'
 import LinearGradient from "react-native-linear-gradient";
 import {compose} from 'redux'
@@ -18,11 +18,10 @@ class Home extends React.Component {
   }
 
   async componentDidMount() {
-    this.props.updateNews();
+    await this.props.updateNews();
   }
 
   _CardPressed = (id) => {
-    this.props.loadMoreNews(this.props.news.news)
     console.log(id);
   }
 
@@ -30,6 +29,20 @@ class Home extends React.Component {
     console.log(id);
   }
 
+  _NewsPressed = (id) => {
+    let data = this.props.news.find(item => item._id === id);
+    console.log(data);
+    Linking.openURL(data.url)
+  }
+
+  _loadMoreNews = () =>{
+    this.props.loadMoreNews(this.props.news);
+  }
+
+  _refreshNews = () => {
+    console.log("refreshing");
+    this.props.updateNews();
+  }
   render() {
     return (
       <Background
@@ -45,8 +58,14 @@ class Home extends React.Component {
                   />
               </Outline>
             <Header> Spaceflight News</Header>
-            <NewsList
-            />
+            <NewsView>
+              <News
+                newsPressed = {this._NewsPressed}
+                loadMore = {this._loadMoreNews}
+                data = {this.props.news}
+                refresh = {this._refreshNews}
+              />
+            </NewsView>
         </Container>
       </Background>
     );
@@ -60,6 +79,12 @@ flex: 1;
 const Calendar = styled(CalendarCard)`
 `
 
+const News = styled(NewsList)``
+
+const NewsView = styled.View`
+border-radius: 8;
+flex: .5;
+`
 const Header = styled.Text`
 text-align: center;
 font-size: 28;
@@ -91,7 +116,7 @@ function mapStateToProps(state) {
     firebase: state.firebase,
     firestore: state.firestore,
     launches: state.firestore.ordered.launches,
-    news: state.news
+    news: state.news.news
   };
 }
 
@@ -103,11 +128,6 @@ connect(mapStateToProps, {
 })
 )(Home)
 
-
-
-const styles = StyleSheet.create({
-
-});
 
 
 
