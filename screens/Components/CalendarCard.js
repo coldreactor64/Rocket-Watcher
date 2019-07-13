@@ -21,7 +21,6 @@ export default class CalendarCard extends PureComponent {
     _onPressItem = (id) => {
         let data = this.props.data.find(item => item.id === id);
         this.props.CardPressed(id);
-        console.log(data);
       };
     
     _onPressNotification = (id) =>{

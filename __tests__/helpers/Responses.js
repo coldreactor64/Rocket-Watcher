@@ -311,8 +311,67 @@ export const news = [
   }
 ]
 
+export const renderNews = [
+    {
+        "date_published": 1562974611,
+        "date_added": 1562974611,
+        "_id": "5d2919933212d0d732377f5b",
+        "news_site_long": "Spaceflight Now",
+        "title": "GSLV Mk.3 rolls out for launch of Indian moon mission",
+        "url": "https://spaceflightnow.com/2019/07/12/gslv-mk-3-rolls-out-for-launch-of-indian-moon-mission/",
+    },
+    {
+        "date_published": 1562964120,
+        "date_added": 1562966213,
+        "_id": "5d28f8c53212d0d7323729d2",
+        "news_site": "nasa",
+        "news_site_long": "NASA",
+        "title": "NASA Awards Contract for Infrastructure Support Services",
+        "url": "https://www.nasa.gov/press-release/nasa-awards-contract-for-infrastructure-support-services",
 
-const defaultData = {"_id": "0001",
+    },
+    {
+        "date_published": 1562961600,
+        "date_added": 1562963812,
+        "_id": "5d28ef643212d0d732371155",
+        "news_site": "nasa",
+        "news_site_long": "NASA",
+        "title": "NASA Funds Demo of 3D-Printed Spacecraft Parts Made, Assembled in Orbit",
+        "url": "https://www.nasa.gov/press-release/nasa-funds-demo-of-3d-printed-spacecraft-parts-made-assembled-in-orbit"
+    },
+    {
+        "date_published": 1562959920,
+        "date_added": 1562960813,
+        "_id": "5d28e3ad3212d0d73236f2c2",
+        "news_site": "nasa",
+        "news_site_long": "NASA",
+        "title": "NASA to Broadcast Launch, Arrival of Astronaut Andrew Morgan at Space Station",
+        "url": "https://www.nasa.gov/press-release/nasa-to-broadcast-launch-arrival-of-astronaut-andrew-morgan-at-space-station",
+
+    },
+    {
+        "date_published": 1562959613,
+        "date_added": 1562959613,
+        "_id": "5d2684a53212d0d73230a7fc",
+        "news_site": "nasaspaceflight",
+        "news_site_long": "NASA Spaceflight",
+        "title": "Soyuz 2-1v conducts surprise military launch",
+        "url": "https://www.nasaspaceflight.com/2019/07/soyuz-2-1v-surprise-military-launch/"
+    },
+    {
+        "date_published": 1562950612,
+        "date_added": 1562950612,
+        "_id": "5d28bbd53212d0d732368ace",
+        "news_site": "nasaspaceflight",
+        "news_site_long": "NASA Spaceflight",
+        "title": "Rescue plan for InSight lander’s stuck heat probe gets underway",
+        "url": "https://www.nasaspaceflight.com/2019/07/rescue-insight-landers-stuck-probe-underway/"
+    }
+  ]
+
+
+
+export const defaultData = [{"_id": "0001",
 "title":"Loading News",
 "url": "https://spaceflightnewsapi.net/",
-"Time": 1562974611}
+"Time": 1562974611}]

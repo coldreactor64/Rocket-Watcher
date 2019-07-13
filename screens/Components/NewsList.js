@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react'
 import { Text, View, FlatList, TouchableOpacity } from 'react-native'
 import styled from 'styled-components';
 
+
 export default class NewsList extends PureComponent {
     constructor(props){
         super(props);
@@ -63,7 +64,7 @@ export default class NewsList extends PureComponent {
     render() {
         return (
             <FlatList
-                data={this.props.data ? this.props.data : this.state.defaultData}
+                data={this.props.data.length > 0 ? this.props.data : this.state.defaultData}
                 keyExtractor={this._keyExtractor}
                 renderItem={this._renderItem}
 
@@ -72,7 +73,9 @@ export default class NewsList extends PureComponent {
 
                 onEndReached={this._loadMore}
                 onEndReachedThreshold={0.5}
-                initialNumToRender={1}
+                initialNumToRender={6}
+
+                testID={"Flatlist"}
             />
         )
     }
@@ -87,14 +90,13 @@ class NewsListItem extends PureComponent{
     }
 
     _onPressCard = () => {
-        console.log(this.props.id);
         this.props.onPressItem(this.props.id);
     }
     
     render() {
         return (
             <CardView>
-                <CardTouch onPress={this._onPressCard} testID={"CardTouch"}>
+                <CardTouch testID={"Touch"} onPress={this._onPressCard}>
                     <Card>
                         <NewsTitle>{this.props.title}</NewsTitle>
                         <NewsTime>{this.props.site} - {this.props.time}</NewsTime>
