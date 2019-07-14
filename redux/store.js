@@ -12,7 +12,7 @@ const reduxFirebaseConfig = {
 const rfConfig = {} // optional redux-firestore Config Options
 
 export const middleware = [thunk.withExtraArgument(getFirebase)];//define the middleware
-//const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;//Compose enchancer for Redux Dev Tools
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;//Compose enchancer for Redux Dev Tools
 
 export default (initialState = { firebase: {} }) => {
     // initialize firebase
