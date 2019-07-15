@@ -4,27 +4,27 @@ import styled from 'styled-components';
 
 
 export default class NewsList extends PureComponent {
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
             defaultData: [{
                 "_id": "5d28f8c53212d0d7323729d2",
-                "title":"Loading News",
+                "title": "Loading News",
                 "url": "https://spaceflightnewsapi.net/",
                 "date_published": 1562974611,
                 "news_site_long": "SpaceflightNewsAPI"
-              }],
+            }],
             refreshing: true
         }
     }
 
 
     _keyExtractor = (item, index) => item._id;
-    
+
     _onPressItem = (id) => {
         this.props.newsPressed(id);
     };
-    
+
     _loadMore = () => this.props.loadMore();
 
 
@@ -32,33 +32,35 @@ export default class NewsList extends PureComponent {
         this.setState({
             refreshing: true
         })
-            
+
         this.props.refresh();
     }
 
 
-    
-    _renderItem = ({item}) => {
-    const timeNow = new Date().getTime() / 1000;
-    const timeDifference = timeNow - item.date_published;
-    const daysDifference = Math.floor(timeDifference / 60 / 60 / 24);
-    const timePosted = daysDifference > 0 ? `${daysDifference}d ago` : "Today";
 
-    return(
-        <NewsListItem
-        id = {item._id}
-        title = {item.title}
-        time = {timePosted}
-        site = {item.news_site_long}
-        onPressItem={this._onPressItem}
-        />
-    )
+    _renderItem = ({ item }) => {
+        const timeNow = new Date().getTime() / 1000;
+        const timeDifference = timeNow - item.date_published;
+        const daysDifference = Math.floor(timeDifference / 60 / 60 / 24);
+        const timePosted = daysDifference > 0 ? `${daysDifference}d ago` : "Today";
+
+        return (
+            <NewsListItem
+                id={item._id}
+                title={item.title}
+                time={timePosted}
+                site={item.news_site_long}
+                onPressItem={this._onPressItem}
+            />
+        )
     }
 
-    componentDidUpdate() {
-        this.setState({
-        refreshing: false
-        })
+    componentDidUpdate(prevProps, prevState) {
+        if (prevState.refreshing === true) {
+            this.setState({
+                refreshing: false
+            })
+        }
     }
 
     render() {
@@ -81,18 +83,18 @@ export default class NewsList extends PureComponent {
     }
 }
 
-class NewsListItem extends PureComponent{
+class NewsListItem extends PureComponent {
 
 
-    
-    constructor(props){
+
+    constructor(props) {
         super(props);
     }
 
     _onPressCard = () => {
         this.props.onPressItem(this.props.id);
     }
-    
+
     render() {
         return (
             <CardView>

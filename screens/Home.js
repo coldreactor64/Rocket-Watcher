@@ -1,71 +1,92 @@
 import React from 'react';
 import { Linking } from 'react-native';
-import { firestoreConnect } from 'react-redux-firebase'
+import { firestoreConnect } from 'react-redux-firebase';
 import LinearGradient from "react-native-linear-gradient";
-import {compose} from 'redux'
-import {connect} from 'react-redux'
-import styled from 'styled-components'
+import { compose } from 'redux';
+import { connect } from 'react-redux';
+import styled from 'styled-components';
 
+import merge from 'lodash/merge';
+import NewsList from './Components/NewsList';
+import CalendarCard from './Components/CalendarCard';
+import { updateNews, loadMoreNews } from '../redux/actions/newsActions';
+import AsyncStorage from '@react-native-community/async-storage';
 
-import NewsList from './Components/NewsList'
-import CalendarCard from './Components/CalendarCard'
-import {updateNews, loadMoreNews} from '../redux/actions/newsActions'
-
+import {
+  loadNotifications,
+  addNotification,
+  removeNotification
+} from '../redux/actions/notificationActions'
 class Home extends React.Component {
   constructor() {
     super();
-    this.state = {};
+    this.state = {
+      launches: []
+    };
   }
 
   async componentDidMount() {
+    await AsyncStorage.removeItem("notifications")
     await this.props.updateNews();
   }
 
-  _CardPressed = (id) => {
-    console.log(id);
+  async componentDidUpdate(prevProps, prevState) {
+    const currentLaunchData = this.props.launches;
+    const currentNotifications = this.props.notifications;
+    const combinedData = merge(currentNotifications, currentLaunchData);
+
+    if (prevState.launches !== combinedData) {
+      this.setState({
+        launches: combinedData
+      })
+    }
+
   }
 
-  _NotificationPressed = (id) => {
-    console.log(id);
+  _CardPressed = (id) => {
+  }
+
+  _NotificationPressed = async (id) => {
+    this.props.addNotification(id);
+    console.log("added")
   }
 
   _NewsPressed = (id) => {
     let data = this.props.news.find(item => item._id === id);
-    console.log(data);
     Linking.openURL(data.url)
   }
 
-  _loadMoreNews = () =>{
+  _loadMoreNews = () => {
     this.props.loadMoreNews(this.props.news);
   }
 
   _refreshNews = () => {
-    console.log("refreshing");
     this.props.updateNews();
   }
+
   render() {
     return (
       <Background
-      colors={["#000","#120846","#150F5B","#3D24F1"]}
-      locations={[0,.5,.6,1]}>
+        colors={["#000", "#120846", "#150F5B", "#3D24F1"]}
+        locations={[0, .5, .6, 1]}>
         <Container>
-            <Header>Launch Schedule</Header>
-              <Outline>
-                  <Calendar
-                  data={this.props.launches}
-                  CardPressed = {this._CardPressed}
-                  NotificationPressed = {this._NotificationPressed}
-                  />
-              </Outline>
-            <Header> Spaceflight News</Header>
-            <NewsView>
-              <News
-                newsPressed = {this._NewsPressed}
-                loadMore = {this._loadMoreNews}
-                data = {this.props.news}
-                refresh = {this._refreshNews}
-              />
-            </NewsView>
+          <Header>Launch Schedule</Header>
+          <Outline>
+            <Calendar
+              data={this.props.launches}
+              CardPressed={this._CardPressed}
+              NotificationPressed={this._NotificationPressed}
+            />
+          </Outline>
+          <Header> Spaceflight News</Header>
+          <NewsView>
+            <News
+              newsPressed={this._NewsPressed}
+              loadMore={this._loadMoreNews}
+              data={this.props.news}
+              refresh={this._refreshNews}
+            />
+          </NewsView>
         </Container>
       </Background>
     );
@@ -116,16 +137,20 @@ function mapStateToProps(state) {
     firebase: state.firebase,
     firestore: state.firestore,
     launches: state.firestore.ordered.launches,
-    news: state.news.news
+    news: state.news.news,
+    notifications: state.notifications.notifications
   };
 }
 
 export default compose(
-firestoreConnect(['launches']),
-connect(mapStateToProps, {
-  updateNews,
-  loadMoreNews
-})
+  firestoreConnect(['launches']),
+  connect(mapStateToProps, {
+    updateNews,
+    loadMoreNews,
+    loadNotifications,
+    addNotification,
+    removeNotification
+  })
 )(Home)
 
 

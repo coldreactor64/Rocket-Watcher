@@ -7,7 +7,7 @@ import axios from "axios";
  * @returns {JSON} - JSON list of News Articles
  */
 
-export const requestNews = async page => {
+export const requestNews = async (page) => {
     
     try {
         const newsRequest = await axios.get(
