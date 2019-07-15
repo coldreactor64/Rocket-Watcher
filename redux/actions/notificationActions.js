@@ -6,7 +6,6 @@ import {
     REMOVE_NOTIFICATION
 } from './actionTypes'
 
-import merge from 'lodash/merge';
 /**
  * @function saveNewNotification - Saves new notification
  * @param {id} id 
@@ -59,7 +58,7 @@ export const removeNotification = (id) => async dispatch => {
 
     const notifications = await readNotifications();
     let notificationIndex = notifications.findIndex(item => item.id === id);
-    const newNotifications = notifications.splice(notificationIndex, notificationIndex)
+    const newNotifications = notifications.splice(notificationIndex,   notificationIndex)
     const notificationsString = JSON.stringify(newNotifications);
     await AsyncStorage.setItem("notifications", notificationsString);
 

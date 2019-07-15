@@ -47,8 +47,14 @@ class Home extends React.Component {
   }
 
   _NotificationPressed = async (id) => {
-    this.props.addNotification(id);
-    console.log("added")
+    let launchData = this.state.launches.find(item => item.id === id);
+    if (launchData.notification === true){
+      this.props.removeNotification(id);
+    }
+    else{
+      this.props.addNotification(id);
+    }
+
   }
 
   _NewsPressed = (id) => {
@@ -73,7 +79,7 @@ class Home extends React.Component {
           <Header>Launch Schedule</Header>
           <Outline>
             <Calendar
-              data={this.props.launches}
+              data={this.state.launches}
               CardPressed={this._CardPressed}
               NotificationPressed={this._NotificationPressed}
             />

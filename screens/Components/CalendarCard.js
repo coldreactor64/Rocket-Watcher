@@ -5,37 +5,39 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome'
 
 
 export default class CalendarCard extends PureComponent {
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
             defaultData: [{
                 "id": "0001",
-                "Location":"N/A",
+                "Location": "N/A",
                 "Name": "Launch Data Unavailable",
                 "Time": "N/A"
-              }]
+            }]
         }
     }
     _keyExtractor = (item, index) => item.id;
-    
+
     _onPressItem = (id) => {
-        let data = this.props.data.find(item => item.id === id);
+        //let data = this.props.data.find(item => item.id === id);
         this.props.CardPressed(id);
-      };
-    
-    _onPressNotification = (id) =>{
+        console.log(this.props.notification)
+    };
+
+    _onPressNotification = (id) => {
         this.props.NotificationPressed(id);
     }
-    
-    _renderItem = ({item}) => (
-    <CalendarCardItem
-        id = {item.id}
-        name = {item.Name}
-        location = {item.Location}
-        time = {item.Time}
-        onPressItem={this._onPressItem}
-        onPressNotification={this._onPressNotification}
-    />
+
+    _renderItem = ({ item }) => (
+        <CalendarCardItem
+            id={item.id}
+            name={item.Name}
+            location={item.Location}
+            time={item.Time}
+            notify={item.notification}
+            onPressItem={this._onPressItem}
+            onPressNotification={this._onPressNotification}
+        />
     );
 
     render() {
@@ -49,20 +51,21 @@ export default class CalendarCard extends PureComponent {
     }
 }
 
-class CalendarCardItem extends PureComponent{
+class CalendarCardItem extends PureComponent {
 
-    constructor(props){
+    constructor(props) {
         super(props);
     }
 
     _onPressCard = () => {
+        console.log(this.props.notify)
         this.props.onPressItem(this.props.id);
     }
 
-    _onPressNotification = () =>{
+    _onPressNotification = () => {
         this.props.onPressNotification(this.props.id);
     }
-    
+
     render() {
         return (
             <CardView>
@@ -73,13 +76,22 @@ class CalendarCardItem extends PureComponent{
                         <LaunchTime>{this.props.time}</LaunchTime>
                     </Card>
                 </CardTouch>
-                <NotifyTouch testID={"NotifyTouch"} onPress= {this._onPressNotification}>
-                <Star
-                name = "star-o"
-                size = {26}
-                color = "#fff"
-                iconStyle = {{textAlign: 'right'}}
-                />
+                <NotifyTouch testID={"NotifyTouch"} onPress={this._onPressNotification}>
+                    {
+                        this.props.notify ? (
+                            <Star
+                                name="star"
+                                size={26}
+                                color="#F5FF00"
+                                iconStyle={{ textAlign: 'right' }}
+                            />) :
+                            (<Star
+                                name="star-o"
+                                size={26}
+                                color="#fff"
+                                iconStyle={{ textAlign: 'right' }}
+                            />)
+                    }
                 </NotifyTouch>
             </CardView>
         )
@@ -87,7 +99,7 @@ class CalendarCardItem extends PureComponent{
 }
 
 
-const Star =  styled(FontAwesome)`
+const Star = styled(FontAwesome)`
 flex-direction: column;
 flex: 1;
 align-self: flex-end;
