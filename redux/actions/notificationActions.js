@@ -56,15 +56,25 @@ export const readNotifications = async () => {
  */
 export const removeNotification = (id) => async dispatch => {
 
-    const notifications = await readNotifications();
+    let notifications = await readNotifications();
     let notificationIndex = notifications.findIndex(item => item.id === id);
-    const newNotifications = notifications.splice(notificationIndex,   notificationIndex)
-    const notificationsString = JSON.stringify(newNotifications);
+    // eslint-disable-next-line no-unused-vars
+    let deleted;
+    if(notificationIndex == 0){
+        deleted = notifications.splice(0, 1);
+    }
+    else{
+        deleted = notifications.splice(notificationIndex, notificationIndex);
+    }
+
+
+    const notificationsString = JSON.stringify(notifications);
     await AsyncStorage.setItem("notifications", notificationsString);
+
 
     dispatch({
         type: REMOVE_NOTIFICATION,
-        notifications: newNotifications
+        notifications: notifications
     });
 }
 

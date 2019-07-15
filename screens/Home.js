@@ -21,7 +21,7 @@ class Home extends React.Component {
   constructor() {
     super();
     this.state = {
-      launches: []
+      'launches': []
     };
   }
 
@@ -31,14 +31,37 @@ class Home extends React.Component {
   }
 
   async componentDidUpdate(prevProps, prevState) {
-    const currentLaunchData = this.props.launches;
-    const currentNotifications = this.props.notifications;
-    const combinedData = merge(currentNotifications, currentLaunchData);
+    let currentLaunchData = this.props.launches;
+    let currentNotifications = this.props.notifications;
 
-    if (prevState.launches !== combinedData) {
+
+    //Make sure they are never undefined
+    if (currentLaunchData == undefined) { 
+      currentLaunchData = []
+    }
+    if (currentNotifications == undefined) {
+      currentNotifications = []
+    }
+
+    let combinedData = [];
+
+    //Combine the Arrays of JSON
+    for (let i = 0; i < currentLaunchData.length; i++) {
+      combinedData.push({
+        ...currentLaunchData[i],
+        ...(currentNotifications.find((itmInner) => itmInner.id === currentLaunchData[i].id))
+      }
+      );
+    }
+    //Make old statee and new state strings to compare JSON
+    let previousStateString = JSON.stringify(prevState.launches)
+    let combinedDataString = JSON.stringify(combinedData)
+    //Only update if different
+    if (previousStateString !== combinedDataString) {
       this.setState({
-        launches: combinedData
+        'launches': combinedData
       })
+
     }
 
   }
@@ -48,10 +71,10 @@ class Home extends React.Component {
 
   _NotificationPressed = async (id) => {
     let launchData = this.state.launches.find(item => item.id === id);
-    if (launchData.notification === true){
+    if (launchData.notification === true) {
       this.props.removeNotification(id);
     }
-    else{
+    else {
       this.props.addNotification(id);
     }
 
