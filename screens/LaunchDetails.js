@@ -4,6 +4,8 @@ import firebase from 'react-native-firebase';
 import { firestoreConnect } from 'react-redux-firebase'
 import {compose} from 'redux'
 import {connect} from 'react-redux'
+import styled from 'styled-components';
+
 class LaunchDetails extends React.Component {
   constructor() {
     super();
@@ -31,11 +33,8 @@ function mapStateToProps(state) {
   };
 }
 export default compose(
-  firestoreConnect(['todos']),
+  firestoreConnect(['launches']),
   connect(mapStateToProps))(LaunchDetails)
 
-const styles = StyleSheet.create({
-
-});
 
 

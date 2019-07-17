@@ -119,7 +119,7 @@ margin: 2%;
 box-shadow: -6px 4px #000;
 shadow-opacity: 0.6;
 shadow-radius: 8.14;
-elevation: 17;
+elevation: 20;
 `
 
 const CardTouch = styled.TouchableOpacity`

@@ -11,7 +11,7 @@ import NewsList from './Components/NewsList';
 import CalendarCard from './Components/CalendarCard';
 import { updateNews, loadMoreNews } from '../redux/actions/newsActions';
 import AsyncStorage from '@react-native-community/async-storage';
-
+import PushNotification from "react-native-push-notification";
 import {
   loadNotifications,
   addNotification,
@@ -28,6 +28,15 @@ class Home extends React.Component {
   async componentDidMount() {
     await AsyncStorage.removeItem("notifications")
     await this.props.updateNews();
+    PushNotification.localNotification({
+      bigText: "My big text that will be shown when notification is expanded", // (optional) default: "message" prop
+      subText: "This is a subText", // (optional) default: none
+      color: "red", // (optional) default: system default
+      vibrate: true, // (optional) default: true
+      vibration: 300,
+      title: "My Notification Title", // (optional)
+      message: "My Notification Message", // (required) // vibration length in milliseconds, ignored if vibrate=false, default: 1000
+    })
   }
 
   async componentDidUpdate(prevProps, prevState) {
