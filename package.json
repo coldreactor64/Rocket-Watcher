@@ -1,41 +1,37 @@
 {
   "name": "RocketWatcher",
-  "version": "5.4.0",
+  "version": "0.0.1",
   "private": true,
   "scripts": {
+    "start": "react-native start",
+    "test": "jest --watchAll",
+    "lint": "eslint .",
     "android-bundle": "mkdir -p android/app/src/main/assets && react-native bundle --platform android --dev true --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/",
     "android": "react-native run-android",
     "ios": "react-native run-ios --simulator=\"iPhone X\"",
-    "apk": "cd android && ./gradlew assembleRelease",
-    "rename": "node ./bin/rename.js",
-    "start": "react-native start",
-    "test": "jest --watchAll"
+    "apk": "cd android && ./gradlew assembleRelease"
   },
   "dependencies": {
     "@react-native-community/async-storage": "^1.5.1",
     "axios": "^0.19.0",
     "lodash": "^4.17.14",
-    "react": "16.8.3",
-    "react-dom": "^16.8.6",
-    "react-native": "0.59.3",
-    "react-native-firebase": "^5.4.0",
+    "moment": "^2.24.0",
+    "moment-timezone": "^0.5.26",
+    "react": "16.8.6",
+    "react-native": "0.60.4",
     "react-native-gesture-handler": "^1.3.0",
     "react-native-linear-gradient": "^2.5.4",
-    "react-native-push-notification": "^3.1.3",
     "react-native-vector-icons": "^6.6.0",
-    "react-navigation": "^3.11.0",
-    "react-redux": "^5.1.1",
-    "react-redux-firebase": "^2.2.6",
-    "redux": "^4.0.1",
-    "redux-firestore": "^0.8.0",
+    "react-navigation": "^3.11.1",
+    "react-redux": "^7.1.0",
+    "redux": "^4.0.4",
     "redux-thunk": "^2.3.0",
     "styled-components": "^4.3.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.4.3",
-    "@babel/runtime": "^7.4.3",
-    "axios-mock-adapter": "^1.17.0",
-    "babel-jest": "^24.7.1",
+    "@babel/core": "^7.5.5",
+    "@babel/runtime": "^7.5.5",
+    "babel-jest": "^24.8.0",
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.14.0",
     "enzyme-to-json": "^3.3.5",
@@ -44,20 +40,18 @@
     "eslint-plugin-prettier": "^3.1.0",
     "eslint-plugin-react": "^7.14.2",
     "eslint-plugin-react-native": "^3.7.0",
-    "fs-extra": "^7.0.1",
-    "jest": "^24.7.1",
+    "jest": "^24.8.0",
     "jest-styled-components": "^6.3.3",
-    "metro-react-native-babel-preset": "^0.53.1",
+    "metro-react-native-babel-preset": "^0.55.0",
     "prettier": "^1.18.2",
-    "react-native-testing-library": "^1.10.0",
-    "react-test-renderer": "^16.8.6",
-    "replace-in-file": "^3.4.4"
+    "react-native-testing-library": "^1.11.1",
+    "react-test-renderer": "^16.8.6"
   },
   "jest": {
     "preset": "react-native",
     "setupFilesAfterEnv": [
       "<rootDir>/Jest/testSetup.js",
-      "<rootDir>/Jest/mockRNFirebase.js"
+      "<rootDir>/Jest/mockAsyncStorage.js"
     ],
     "testPathIgnorePatterns": [
       "<rootDir>/__tests__/helpers/",

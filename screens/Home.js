@@ -1,6 +1,5 @@
 import React from 'react';
 import { Linking } from 'react-native';
-import { firestoreConnect } from 'react-redux-firebase';
 import LinearGradient from "react-native-linear-gradient";
 import { compose } from 'redux';
 import { connect } from 'react-redux';
@@ -11,7 +10,7 @@ import NewsList from './Components/NewsList';
 import CalendarCard from './Components/CalendarCard';
 import { updateNews, loadMoreNews } from '../redux/actions/newsActions';
 import AsyncStorage from '@react-native-community/async-storage';
-import PushNotification from "react-native-push-notification";
+//import PushNotification from "react-native-push-notification";
 import {
   loadNotifications,
   addNotification,
@@ -28,15 +27,6 @@ class Home extends React.Component {
   async componentDidMount() {
     await AsyncStorage.removeItem("notifications")
     await this.props.updateNews();
-    PushNotification.localNotification({
-      bigText: "My big text that will be shown when notification is expanded", // (optional) default: "message" prop
-      subText: "This is a subText", // (optional) default: none
-      color: "red", // (optional) default: system default
-      vibrate: true, // (optional) default: true
-      vibration: 300,
-      title: "My Notification Title", // (optional)
-      message: "My Notification Message", // (required) // vibration length in milliseconds, ignored if vibrate=false, default: 1000
-    })
   }
 
   async componentDidUpdate(prevProps, prevState) {
@@ -107,6 +97,7 @@ class Home extends React.Component {
       <Background
         colors={["#000", "#120846", "#150F5B", "#3D24F1"]}
         locations={[0, .5, .6, 1]}>
+        <Header>Rocket Watcher</Header>
         <Container>
           <Header>Launch Schedule</Header>
           <Outline>
@@ -154,7 +145,6 @@ margin-top: 10;
 `
 
 const Container = styled.View`
-margin-top: 60px;
 flex-direction: column;
 align-content: flex-end;
 height: 300px;
@@ -172,23 +162,19 @@ flex: .5;
 
 function mapStateToProps(state) {
   return {
-    firebase: state.firebase,
-    firestore: state.firestore,
-    launches: state.firestore.ordered.launches,
     news: state.news.news,
     notifications: state.notifications.notifications
   };
 }
 
-export default compose(
-  firestoreConnect(['launches']),
-  connect(mapStateToProps, {
+export default 
+connect(mapStateToProps, {
     updateNews,
     loadMoreNews,
     loadNotifications,
     addNotification,
     removeNotification
-  })
+  }
 )(Home)
 
 

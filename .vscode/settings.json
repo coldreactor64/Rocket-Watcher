@@ -1,7 +1,0 @@
-{
-    "eslint.packageManager": "yarn",
-    "eslint.run": "onSave",
-    "editor.formatOnSave": true,          // THIS WILL TRIGGER PRETTIER ON SAVE
-    "prettier.eslintIntegration": true    // THIS WILL MAKE IT COMMUNICATE WITH ESLINT
-
-}
