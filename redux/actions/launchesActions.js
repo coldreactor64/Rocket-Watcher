@@ -36,7 +36,6 @@ export const updateLaunches = () => async dispatch => {
 
 export const loadMoreLaunches = (launches) => async dispatch => {
   const launchCount = launches.length; //get Number of articles
-  console.log(`launchCount: ${launchCount}`)
   const newLaunches = await requestLaunches(launchCount); //request the pages + 1
   const newLaunchSchedule = launches.concat(newLaunches);
   /*Check new news if its null from an error*/

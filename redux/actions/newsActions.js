@@ -29,7 +29,6 @@ export const requestNews = async (page) => {
 
 export const updateNews = () => async dispatch => {
   const news = await requestNews(1);
-  console.log(news);
   dispatch({
     type: UPDATE_NEWS,
     news: news

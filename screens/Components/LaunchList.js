@@ -25,9 +25,7 @@ export default class LaunchList extends PureComponent {
 
     _onPressItem = (id) => {
         //let data = this.props.data.find(item => item.id === id);
-        this.props.CardPressed(id);
-        console.log(this.props.data)
-        console.log(this.props.notification)
+        this.props.LaunchPressed(id);
     };
 
     _onPressNotification = (id) => {

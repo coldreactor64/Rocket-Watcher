@@ -33,7 +33,13 @@ class Home extends React.Component {
 
   }
 
-  _CardPressed = (id) => {
+  _LaunchPressed = (id) => {
+    let data = this.props.launches.find(item => item.id === id);
+    this.props.navigation.navigate("details",{
+      data: data,
+      name: data.name
+    })
+
   }
 
   _NotificationPressed = async (id) => {
@@ -56,7 +62,7 @@ class Home extends React.Component {
     this.props.loadMoreLaunches(this.props.launches);
   }
 
-  _refreshNews = () => {
+  _refreshLaunches = () => {
     this.props.updateLaunches();
   }
 
@@ -67,19 +73,19 @@ class Home extends React.Component {
       <Background
         colors={["#000", "#120846", "#150F5B", "#3D24F1"]}
         locations={[0, .5, .6, 1]}>
-        <Header>Rocket Watcher</Header>
+        <Title>Rocket Watcher</Title>
         <Container>
-          <Header>Launch Schedule</Header>
+          <Header1>Launch Schedule</Header1>
           <Outline>
           <Calendar
               data={this.props.launches}
-              CardPressed={this._CardPressed}
+              LaunchPressed={this._LaunchPressed}
               loadMore={this._loadMoreLaunches}
               refresh={this._refreshLaunches}
               NotificationPressed={this._NotificationPressed}
             />
           </Outline>
-          <Header> Spaceflight News</Header>
+          <Header2> Spaceflight News</Header2>
           <NewsView>
             <News
               newsPressed={this._NewsPressed}
@@ -108,13 +114,31 @@ const NewsView = styled.View`
 border-radius: 8;
 flex: .5;
 `
-const Header = styled.Text`
+const Title = styled.Text`
 text-align: center;
 font-size: 28;
 color:#fff;
 font-family: 'Montserrat-Bold';
-margin-bottom: 10;
+margin-bottom: 6;
 margin-top: 10;
+
+`
+
+const Header1 = styled.Text`
+text-align: center;
+font-size: 23;
+color: #fff;
+font-family: 'Montserrat-Bold';
+margin-bottom: 10;
+`
+
+const Header2 = styled.Text`
+text-align: center;
+font-size: 23;
+color:#fff;
+font-family: 'Montserrat-Bold';
+margin-bottom: 7;
+margin-top: 7;
 `
 
 const Container = styled.View`
@@ -128,8 +152,7 @@ flex: 1;
 const Outline = styled.View`
 margin-left: 8px;
 margin-right: 8px;
-border-radius: 8;
-background-color: #343FC1;
+border-radius: 20px;
 flex: .5;
 `
 

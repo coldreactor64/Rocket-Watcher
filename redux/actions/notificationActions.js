@@ -20,7 +20,7 @@ export const saveNewNotification = async (id) => {
     }]
 
     const newNotifications = currentNotifications.concat(addedNotification);
-    console.log(newNotifications)
+
     const notificationsString = JSON.stringify(newNotifications);
     await AsyncStorage.setItem("notifications", notificationsString);
     return newNotifications;
