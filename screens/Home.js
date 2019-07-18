@@ -7,61 +7,29 @@ import styled from 'styled-components';
 
 import merge from 'lodash/merge';
 import NewsList from './Components/NewsList';
-import CalendarCard from './Components/CalendarCard';
+import LaunchList from './Components/LaunchList';
 import { updateNews, loadMoreNews } from '../redux/actions/newsActions';
+import { updateLaunches, loadMoreLaunches } from '../redux/actions/launchesActions';
 import AsyncStorage from '@react-native-community/async-storage';
+
+
 //import PushNotification from "react-native-push-notification";
-import {
-  loadNotifications,
-  addNotification,
-  removeNotification
-} from '../redux/actions/notificationActions'
+
 class Home extends React.Component {
   constructor() {
     super();
     this.state = {
-      'launches': []
     };
   }
 
   async componentDidMount() {
     await AsyncStorage.removeItem("notifications")
+    await this.props.updateLaunches();
     await this.props.updateNews();
+
   }
 
   async componentDidUpdate(prevProps, prevState) {
-    let currentLaunchData = this.props.launches;
-    let currentNotifications = this.props.notifications;
-
-
-    //Make sure they are never undefined
-    if (currentLaunchData == undefined) { 
-      currentLaunchData = []
-    }
-    if (currentNotifications == undefined) {
-      currentNotifications = []
-    }
-
-    let combinedData = [];
-
-    //Combine the Arrays of JSON
-    for (let i = 0; i < currentLaunchData.length; i++) {
-      combinedData.push({
-        ...currentLaunchData[i],
-        ...(currentNotifications.find((itmInner) => itmInner.id === currentLaunchData[i].id))
-      }
-      );
-    }
-    //Make old statee and new state strings to compare JSON
-    let previousStateString = JSON.stringify(prevState.launches)
-    let combinedDataString = JSON.stringify(combinedData)
-    //Only update if different
-    if (previousStateString !== combinedDataString) {
-      this.setState({
-        'launches': combinedData
-      })
-
-    }
 
   }
 
@@ -69,14 +37,6 @@ class Home extends React.Component {
   }
 
   _NotificationPressed = async (id) => {
-    let launchData = this.state.launches.find(item => item.id === id);
-    if (launchData.notification === true) {
-      this.props.removeNotification(id);
-    }
-    else {
-      this.props.addNotification(id);
-    }
-
   }
 
   _NewsPressed = (id) => {
@@ -92,6 +52,16 @@ class Home extends React.Component {
     this.props.updateNews();
   }
 
+  _loadMoreLaunches = () => {
+    this.props.loadMoreLaunches(this.props.launches);
+  }
+
+  _refreshNews = () => {
+    this.props.updateLaunches();
+  }
+
+
+
   render() {
     return (
       <Background
@@ -101,9 +71,11 @@ class Home extends React.Component {
         <Container>
           <Header>Launch Schedule</Header>
           <Outline>
-            <Calendar
-              data={this.state.launches}
+          <Calendar
+              data={this.props.launches}
               CardPressed={this._CardPressed}
+              loadMore={this._loadMoreLaunches}
+              refresh={this._refreshLaunches}
               NotificationPressed={this._NotificationPressed}
             />
           </Outline>
@@ -112,8 +84,9 @@ class Home extends React.Component {
             <News
               newsPressed={this._NewsPressed}
               loadMore={this._loadMoreNews}
-              data={this.props.news}
               refresh={this._refreshNews}
+              data={this.props.news}
+
             />
           </NewsView>
         </Container>
@@ -126,7 +99,7 @@ const Background = styled(LinearGradient)`
 flex: 1;
 `
 
-const Calendar = styled(CalendarCard)`
+const Calendar = styled(LaunchList)`
 `
 
 const News = styled(NewsList)``
@@ -163,6 +136,7 @@ flex: .5;
 function mapStateToProps(state) {
   return {
     news: state.news.news,
+    launches: state.launches.launches,
     notifications: state.notifications.notifications
   };
 }
@@ -171,9 +145,8 @@ export default
 connect(mapStateToProps, {
     updateNews,
     loadMoreNews,
-    loadNotifications,
-    addNotification,
-    removeNotification
+    updateLaunches,
+    loadMoreLaunches
   }
 )(Home)
 

@@ -2,25 +2,31 @@ import React, { PureComponent } from 'react'
 import { Text, View, FlatList, TouchableOpacity } from 'react-native'
 import styled from 'styled-components';
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
+import DeviceInfo from 'react-native-device-info';
+import moment from 'moment'
+import tz from 'moment-timezone'
 
-
-export default class CalendarCard extends PureComponent {
+export default class LaunchList extends PureComponent {
     constructor(props) {
         super(props);
         this.state = {
             defaultData: [{
                 "id": "0001",
-                "Location": "N/A",
-                "Name": "Launch Data Unavailable",
-                "Time": "N/A"
-            }]
+                "location": {
+                    "name": "N/A"
+                },
+                "name": "Launch Data Unavailable",
+                "isostart": "N/A"
+            }],
+            refreshing: true
         }
     }
-    _keyExtractor = (item, index) => item.id;
+    _keyExtractor = (item, index) => item.id.toString();
 
     _onPressItem = (id) => {
         //let data = this.props.data.find(item => item.id === id);
         this.props.CardPressed(id);
+        console.log(this.props.data)
         console.log(this.props.notification)
     };
 
@@ -29,16 +35,35 @@ export default class CalendarCard extends PureComponent {
     }
 
     _renderItem = ({ item }) => (
-        <CalendarCardItem
+        <LaunchListItem
             id={item.id}
-            name={item.Name}
-            location={item.Location}
-            time={item.Time}
-            notify={item.notification}
+            name={item.name}
+            location={item.location.name}
+            time={item.isostart}
             onPressItem={this._onPressItem}
             onPressNotification={this._onPressNotification}
         />
     );
+
+
+    _loadMore = () => this.props.loadMore();
+
+
+    _refresh = () => {
+        this.setState({
+            refreshing: true
+        })
+
+        this.props.refresh();
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if (prevState.refreshing === true) {
+            this.setState({
+                refreshing: false
+            })
+        }
+    }
 
     render() {
         return (
@@ -46,25 +71,47 @@ export default class CalendarCard extends PureComponent {
                 data={this.props.data ? this.props.data : this.state.defaultData}
                 keyExtractor={this._keyExtractor}
                 renderItem={this._renderItem}
+
+                onRefresh={this._refresh}
+                refreshing={this.state.refreshing}
+
+                onEndReached={this._loadMore}
+                onEndReachedThreshold={0.5}
+                initialNumToRender={6}
             />
         )
     }
 }
 
-class CalendarCardItem extends PureComponent {
+class LaunchListItem extends PureComponent {
 
     constructor(props) {
         super(props);
+        this.state = {
+            "time": ""
+        }
     }
 
     _onPressCard = () => {
-        console.log(this.props.notify)
         this.props.onPressItem(this.props.id);
     }
 
     _onPressNotification = () => {
         this.props.onPressNotification(this.props.id);
     }
+
+    async componentDidMount(){
+        let timezone = await DeviceInfo.getTimezone();
+        let time = moment(this.props.time);
+        let localTime = time.tz(timezone);
+        let formattedTime = localTime.format("dddd, MMMM Do YYYY, h:mm:ss a");
+        this.setState({
+            time: formattedTime
+          });
+
+    }
+
+
 
     render() {
         return (
@@ -73,26 +120,9 @@ class CalendarCardItem extends PureComponent {
                     <Card>
                         <LaunchName>{this.props.name}</LaunchName>
                         <LaunchLocation>{this.props.location}</LaunchLocation>
-                        <LaunchTime>{this.props.time}</LaunchTime>
+                        <LaunchTime>{this.state.time}</LaunchTime>
                     </Card>
                 </CardTouch>
-                <NotifyTouch testID={"NotifyTouch"} onPress={this._onPressNotification}>
-                    {
-                        this.props.notify ? (
-                            <Star
-                                name="star"
-                                size={26}
-                                color="#F5FF00"
-                                iconStyle={{ textAlign: 'right' }}
-                            />) :
-                            (<Star
-                                name="star-o"
-                                size={26}
-                                color="#fff"
-                                iconStyle={{ textAlign: 'right' }}
-                            />)
-                    }
-                </NotifyTouch>
             </CardView>
         )
     }
@@ -122,7 +152,7 @@ elevation: 20;
 `
 
 const CardTouch = styled.TouchableOpacity`
-flex: .9;
+flex: 1;
 `
 
 const NotifyTouch = styled.TouchableOpacity`

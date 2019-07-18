@@ -1,7 +1,5 @@
 import React from 'react';
-import { StyleSheet, Platform, Image, Text, View, ScrollView } from 'react-native';
-
-import {compose} from 'redux'
+import { StyleSheet, Text, View } from 'react-native';
 import {connect} from 'react-redux'
 class Settings extends React.Component {
   constructor() {

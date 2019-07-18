@@ -1,7 +1,5 @@
 import React from 'react';
-import { StyleSheet, Platform, Image, Text, View, ScrollView } from 'react-native';
-
-import {compose} from 'redux'
+import { Text, View } from 'react-native';
 import {connect} from 'react-redux'
 import styled from 'styled-components';
 
@@ -27,8 +25,6 @@ class LaunchDetails extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    firebase: state.firebase,
-    firestore: state.firestore,
     todos: state.firestore.ordered.todos
   };
 }
