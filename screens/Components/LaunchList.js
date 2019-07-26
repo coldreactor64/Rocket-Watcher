@@ -16,7 +16,7 @@ export default class LaunchList extends PureComponent {
                     "name": "N/A"
                 },
                 "name": "Launch Data Unavailable",
-                "isostart": "N/A"
+                "isostart": "20190730T050000Z"
             }],
             refreshing: true
         }
@@ -66,7 +66,7 @@ export default class LaunchList extends PureComponent {
     render() {
         return (
             <FlatList
-                data={this.props.data ? this.props.data : this.state.defaultData}
+                data={this.props.data.length > 0 ? this.props.data : this.state.defaultData }
                 keyExtractor={this._keyExtractor}
                 renderItem={this._renderItem}
 
@@ -76,6 +76,7 @@ export default class LaunchList extends PureComponent {
                 onEndReached={this._loadMore}
                 onEndReachedThreshold={0.5}
                 initialNumToRender={6}
+                testID={"Flatlist"}
             />
         )
     }
@@ -114,7 +115,7 @@ class LaunchListItem extends PureComponent {
     render() {
         return (
             <CardView>
-                <CardTouch onPress={this._onPressCard} testID={"CardTouch"}>
+                <CardTouch onPress={this._onPressCard} testID={"Touch"}>
                     <Card>
                         <LaunchName>{this.props.name}</LaunchName>
                         <LaunchLocation>{this.props.location}</LaunchLocation>

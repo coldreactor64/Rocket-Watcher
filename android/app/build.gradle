@@ -77,7 +77,7 @@ import com.android.build.OutputFile
 
 project.ext.react = [
     entryFile: "index.js",
-    enableHermes: false,  // clean and rebuild if changing
+    enableHermes: true,  // clean and rebuild if changing
 ]
 
 apply from: "../../node_modules/react-native/react.gradle"
@@ -119,6 +119,22 @@ def jscFlavor = 'org.webkit:android-jsc:+'
  */
 def enableHermes = project.ext.react.get("enableHermes", false);
 
+def getPassword(String currentUser, String keyChain) {
+   def stdout = new ByteArrayOutputStream()
+   def stderr = new ByteArrayOutputStream()
+   exec {
+       commandLine 'security', '-q', 'find-generic-password', '-a', currentUser, '-s', keyChain, '-w'
+       standardOutput = stdout
+       errorOutput = stderr
+       ignoreExitValue true
+   }
+   //noinspection GroovyAssignabilityCheck
+      stdout.toString().trim()
+}
+
+def key_pass = getPassword("Jeremy","android_keystore")
+def store_pass = getPassword("Jeremy","android_keystore")
+
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
 
@@ -127,6 +143,9 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+
+    flavorDimensions "default" 
+
     defaultConfig {
         applicationId "com.rocketwatcher"
         minSdkVersion rootProject.ext.minSdkVersion
@@ -134,6 +153,22 @@ android {
         versionCode 1
         versionName "1.0"
     }
+
+    productFlavors {
+        dev {
+            minSdkVersion rootProject.ext.minSdkVersion
+            applicationId 'com.rocketwatcher.dev'
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            resValue "string", "build_config_package", "com.rocketwatcher"
+        }
+        beta {
+            minSdkVersion rootProject.ext.minSdkVersion
+            applicationId 'com.rocketwatcher.beta'
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            resValue "string", "build_config_package", "com.rocketwatcher"
+        }
+    }
+
     splits {
         abi {
             reset()
@@ -149,6 +184,13 @@ android {
             keyAlias 'androiddebugkey'
             keyPassword 'android'
         }
+        release
+        {
+            storeFile file('rocket-watcher.keystore')
+            storePassword store_pass
+            keyAlias 'rocketwatcher'
+            keyPassword key_pass
+        }
     }
     buildTypes {
         debug {
@@ -157,7 +199,7 @@ android {
         release {
             // Caution! In production, you need to generate your own keystore file.
             // see https://facebook.github.io/react-native/docs/signed-apk-android.
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.release
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }

@@ -1,7 +1,11 @@
+/* eslint-disable*/
+
 import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
 import {storeFactory} from '../../helpers/helperFunctions';
-import {newsGet, news} from '../../helpers/Responses'
+import {newsGet, news,
+newsGetResponse, newsFiltered
+} from '../../helpers/newsResponses'
 import {updateNews, loadMoreNews} from '../../../redux/actions/newsActions'
 
 
@@ -12,12 +16,12 @@ describe('updateNews', () => {
         
         mock
         .onGet('https://spaceflightnewsapi.net/api/v1/articles?page=1&limit=6')
-        .reply(200, newsGet);
+        .reply(200, newsGetResponse);
 
         return store.dispatch(updateNews())
         .then(()=>{
             const newState = store.getState()
-            expect(newState.news.news).toEqual(news)
+            expect(newState.news.news).toEqual(newsFiltered)
             //insert expected state
         })
 
@@ -48,12 +52,12 @@ describe('LoadMoreNews:', () => {
         
         mock
         .onGet('https://spaceflightnewsapi.net/api/v1/articles?page=1&limit=6')
-        .reply(200, newsGet);
+        .reply(200, newsGetResponse);
 
         return store.dispatch(loadMoreNews([]))//Load more news from nothing works the same as if there was data
         .then(()=>{
             const newState = store.getState()
-            expect(newState.news.news).toEqual(news)//Match with news
+            expect(newState.news.news).toEqual(newsFiltered)//Match with news
         })
 
     });
@@ -66,7 +70,7 @@ describe('LoadMoreNews:', () => {
         .onGet('https://spaceflightnewsapi.net/api/v1/articles?page=2&limit=6')
         .reply(400, {});
 
-        return store.dispatch(loadMoreNews(news))
+        return store.dispatch(loadMoreNews(newsFiltered))
         .then(()=>{
             const newState = store.getState()
             expect(newState.news.news).toEqual([])

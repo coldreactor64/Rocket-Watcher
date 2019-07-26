@@ -1,5 +1,5 @@
 
-export const newsGet = { //News get request return
+export const newsGetResponse = { //News get request return
   "docs": [
       {
           "date_published": 1562974611,
@@ -161,7 +161,7 @@ export const newsGet = { //News get request return
 }
 
 
-export const news = [
+export const newsFiltered = [
   {
       "date_published": 1562974611,
       "date_added": 1562974611,
@@ -311,7 +311,7 @@ export const news = [
   }
 ]
 
-export const renderNews = [
+export const newsData = [
     {
         "date_published": 1562974611,
         "date_added": 1562974611,
@@ -369,9 +369,9 @@ export const renderNews = [
     }
   ]
 
-
-
-export const defaultData = [{"_id": "0001",
+export const defaultNewsData = [{
+"_id": "0001",
 "title":"Loading News",
 "url": "https://spaceflightnewsapi.net/",
 "Time": 1562974611}]
+

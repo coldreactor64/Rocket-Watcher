@@ -1,5 +1,5 @@
 import React from 'react';
-import { Linking, NativeModules } from 'react-native';
+import { Linking, NativeModules, Platform} from 'react-native';
 import LinearGradient from "react-native-linear-gradient";
 import { compose } from 'redux';
 import { connect } from 'react-redux';
@@ -23,13 +23,18 @@ class Home extends React.Component {
   }
 
   async componentDidMount() {
+    
     await AsyncStorage.removeItem("notifications")
-    setTimeout(()=>{
-      NativeModules.ImmersiveMode.enterStickyImmersiveMode();
-    }, 1600)
+
+    if (Platform.OS === 'android'){
+      setTimeout(()=>{
+        NativeModules.ImmersiveMode.enterStickyImmersiveMode();
+      }, 1600)
+    }
 
     await this.props.updateLaunches();
     await this.props.updateNews();
+
   }
 
   async componentDidUpdate(prevProps, prevState) {

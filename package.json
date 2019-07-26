@@ -7,7 +7,7 @@
     "test": "jest --watchAll",
     "lint": "eslint .",
     "android-bundle": "mkdir -p android/app/src/main/assets && react-native bundle --platform android --dev true --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/",
-    "android": "react-native run-android",
+    "android": "react-native run-android --variant devdebug --appIdSuffix=dev",
     "ios": "react-native run-ios --simulator=\"iPhone X\"",
     "apk": "cd android && ./gradlew assembleRelease"
   },
@@ -54,7 +54,8 @@
     "preset": "react-native",
     "setupFilesAfterEnv": [
       "<rootDir>/Jest/testSetup.js",
-      "<rootDir>/Jest/mockAsyncStorage.js"
+      "<rootDir>/Jest/mockAsyncStorage.js",
+      "<rootDir>/Jest/mockDeviceInfo.js"
     ],
     "testPathIgnorePatterns": [
       "<rootDir>/__tests__/helpers/",
