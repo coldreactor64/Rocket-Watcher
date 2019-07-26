@@ -110,8 +110,6 @@ class LaunchListItem extends PureComponent {
 
     }
 
-
-
     render() {
         return (
             <CardView>

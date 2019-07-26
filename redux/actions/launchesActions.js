@@ -40,7 +40,7 @@ export const loadMoreLaunches = (launches) => async dispatch => {
   const newLaunchSchedule = launches.concat(newLaunches);
   /*Check new news if its null from an error*/
 
-  if (newLaunchSchedule.length === 0) {
+  if (newLaunches.length === 0) {
     //if error null out everything
     dispatch({
       type: LOAD_MORE_LAUNCHES,

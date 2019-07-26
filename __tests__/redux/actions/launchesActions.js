@@ -4,9 +4,9 @@ import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
 import {storeFactory} from '../../helpers/helperFunctions';
 import {
-newsGetResponse, newsFiltered
-} from '../../helpers/newsResponses'
-import {updateNews, loadMoreNews} from '../../../redux/actions/newsActions'
+launchGetResponse, launchData
+} from '../../helpers/launchResponses'
+import {updateLaunches, loadMoreLaunches} from '../../../redux/actions/launchesActions'
 
 
 describe('updateNews', () => {
@@ -15,13 +15,13 @@ describe('updateNews', () => {
         var mock = new MockAdapter(axios);
         
         mock
-        .onGet('https://spaceflightnewsapi.net/api/v1/articles?page=1&limit=6')
-        .reply(200, newsGetResponse);
+        .onGet('https://launchlibrary.net/1.4/launch/next/6?offset=0')
+        .reply(200, launchGetResponse);
 
-        return store.dispatch(updateNews())
+        return store.dispatch(updateLaunches())
         .then(()=>{
             const newState = store.getState()
-            expect(newState.news.news).toEqual(newsFiltered)
+            expect(newState.launches.launches).toEqual(launchData)
             //insert expected state
         })
 
@@ -31,10 +31,10 @@ describe('updateNews', () => {
         var mock = new MockAdapter(axios);
         
         mock //mock request
-        .onGet('https://spaceflightnewsapi.net/api/v1/articles?page=1&limit=6')
+        .onGet('https://launchlibrary.net/1.4/launch/next/6?offset=0')
         .reply(400, {});
 
-        return store.dispatch(updateNews())
+        return store.dispatch(updateLaunches())
         .then(()=>{
             const newState = store.getState()
             expect(newState.news.news).toEqual([])
@@ -51,13 +51,13 @@ describe('loadMoreNews:', () => {
         var mock = new MockAdapter(axios);
         
         mock
-        .onGet('https://spaceflightnewsapi.net/api/v1/articles?page=1&limit=6')
-        .reply(200, newsGetResponse);
+        .onGet('https://launchlibrary.net/1.4/launch/next/6?offset=0')
+        .reply(200, launchGetResponse);
 
-        return store.dispatch(loadMoreNews([]))//Load more news from nothing works the same as if there was data
+        return store.dispatch(loadMoreLaunches([]))//Load more news from nothing works the same as if there was data
         .then(()=>{
             const newState = store.getState()
-            expect(newState.news.news).toEqual(newsFiltered)//Match with news
+            expect(newState.launches.launches).toEqual(launchData)//Match with news
         })
 
     });
@@ -67,13 +67,13 @@ describe('loadMoreNews:', () => {
         var mock = new MockAdapter(axios);
         
         mock //mock request
-        .onGet('https://spaceflightnewsapi.net/api/v1/articles?page=2&limit=6')
+        .onGet('https://launchlibrary.net/1.4/launch/next/6?offset=0')
         .reply(400, {});
 
-        return store.dispatch(loadMoreNews(newsFiltered))
+        return store.dispatch(loadMoreLaunches(launchData))
         .then(()=>{
             const newState = store.getState()
-            expect(newState.news.news).toEqual([])
+            expect(newState.launches.launches).toEqual([])
         })
     });
 
@@ -82,14 +82,13 @@ describe('loadMoreNews:', () => {
         var mock = new MockAdapter(axios);
         
         mock //mock request
-        .onGet('https://spaceflightnewsapi.net/api/v1/articles?page=1&limit=6')
+        .onGet('https://launchlibrary.net/1.4/launch/next/6?offset=0')
         .reply(400, {});
 
-        return store.dispatch(loadMoreNews([]))
+        return store.dispatch(loadMoreLaunches([]))
         .then(()=>{
             const newState = store.getState()
-            expect(newState.news.news).toEqual([])
-
+            expect(newState.launches.launches).toEqual([])
         })
     });
 
