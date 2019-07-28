@@ -1,6 +1,7 @@
 import React from 'react';
-import { Text, View, Image, ScrollView } from 'react-native';
+import { Text, View, Image, ScrollView, ImageBackground } from 'react-native';
 import {connect} from 'react-redux'
+import Button from './Components/Button'
 import styled from 'styled-components';
 import LinearGradient from "react-native-linear-gradient";
 import DeviceInfo from 'react-native-device-info';
@@ -39,6 +40,7 @@ class LaunchDetails extends React.Component {
   async componentDidMount() {
   }
 
+  //TODO: Preload image with componentWillMount() in LaunchDetails.js
   render() {
 
     let launchData = this.props.navigation.getParam('data');
@@ -50,8 +52,7 @@ class LaunchDetails extends React.Component {
 
     return (
       <Background
-      colors={["#000", "#120846", "#150F5B", "#3D24F1"]}
-      locations={[0, .5, .6, 1]}
+      source = {require('../assets/images/Background.png')}
       >
         <DescriptionOutline>
             <DescriptionHeader>
@@ -80,7 +81,7 @@ class LaunchDetails extends React.Component {
 const ScrollContainer = styled.ScrollView`
 `
 
-const Background = styled(LinearGradient)`
+const Background = styled(ImageBackground)`
 flex: 1;
 `
 

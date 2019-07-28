@@ -1,5 +1,5 @@
 import React from 'react';
-import { Linking, NativeModules, Platform} from 'react-native';
+import { Linking, NativeModules, Platform, ImageBackground} from 'react-native';
 import LinearGradient from "react-native-linear-gradient";
 import { compose } from 'redux';
 import { connect } from 'react-redux';
@@ -11,7 +11,7 @@ import LaunchList from './Components/LaunchList';
 import { updateNews, loadMoreNews } from '../redux/actions/newsActions';
 import { updateLaunches, loadMoreLaunches } from '../redux/actions/launchesActions';
 import AsyncStorage from '@react-native-community/async-storage';
-
+import PushNotification from "react-native-push-notification";
 
 //import PushNotification from "react-native-push-notification";
 
@@ -22,9 +22,12 @@ class Home extends React.Component {
     };
   }
 
+
   async componentDidMount() {
     
     await AsyncStorage.removeItem("notifications")
+
+    _scheduleNotifications();
 
     if (Platform.OS === 'android'){
       setTimeout(()=>{
@@ -75,12 +78,12 @@ class Home extends React.Component {
   }
 
 
-
+  //TODO: Preload image with componentWillMount() in Home.js
   render() {
     return (
       <Background
-        colors={["#000", "#120846", "#150F5B", "#3D24F1"]}
-        locations={[0, .5, .6, 1]}>
+      source = {require('../assets/images/Background.png')}
+      >
         <Title>Rocket Watcher</Title>
         <Container>
           <Header1>Launch Schedule</Header1>
@@ -109,7 +112,7 @@ class Home extends React.Component {
   }
 }
 
-const Background = styled(LinearGradient)`
+const Background = styled(ImageBackground)`
 flex: 1;
 `
 
