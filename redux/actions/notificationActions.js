@@ -77,7 +77,7 @@ export const removeNotification = (id) => async dispatch => {
         deleted = notifications.splice(0, 1);//If index is 0 then you need to splice it 0, 1 not 0,0
     }
     else{
-        deleted = notifications.splice(notificationIndex, notificationIndex);
+        deleted = notifications.splice(notificationIndex, 1);
     }
 
 
