@@ -62,7 +62,7 @@ export const readNotifications = async () => {
 /**
  * @function removeNotification
  * @param {id} id id of notifcation to remove
- * @returns {dispatch}
+ * @returns {dispatch} new notification state
  */
 export const removeNotification = (id) => async dispatch => {
     //TODO: Add removal of that scheduled notification

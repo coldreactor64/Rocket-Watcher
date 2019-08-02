@@ -144,7 +144,7 @@ android {
     }
 
 
-    flavorDimensions "default" 
+    
 
     defaultConfig {
         applicationId "com.rocketwatcher"
@@ -152,21 +152,6 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
-    }
-
-    productFlavors {
-        dev {
-            minSdkVersion rootProject.ext.minSdkVersion
-            applicationId 'com.rocketwatcher.dev'
-            targetSdkVersion rootProject.ext.targetSdkVersion
-            resValue "string", "build_config_package", "com.rocketwatcher"
-        }
-        beta {
-            minSdkVersion rootProject.ext.minSdkVersion
-            applicationId 'com.rocketwatcher.beta'
-            targetSdkVersion rootProject.ext.targetSdkVersion
-            resValue "string", "build_config_package", "com.rocketwatcher"
-        }
     }
 
     splits {
@@ -195,6 +180,7 @@ android {
     buildTypes {
         debug {
             signingConfig signingConfigs.debug
+            applicationIdSuffix ".debug"
         }
         release {
             // Caution! In production, you need to generate your own keystore file.

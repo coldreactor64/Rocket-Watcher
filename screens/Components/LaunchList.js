@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react'
+import React, { PureComponent, Component } from 'react'
 import { Text, View, FlatList, TouchableOpacity } from 'react-native'
 import styled from 'styled-components';
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
@@ -7,8 +7,10 @@ import moment from 'moment'
 import tz from 'moment-timezone'
 
 export default class LaunchList extends PureComponent {
+
     constructor(props) {
         super(props);
+
         this.state = {
             defaultData: [{
                 "id": "0001",
@@ -20,28 +22,26 @@ export default class LaunchList extends PureComponent {
             }],
             refreshing: true
         }
+
     }
     _keyExtractor = (item, index) => item.id.toString();
 
-    _onPressItem = (id) => {
-        //let data = this.props.data.find(item => item.id === id);
-        this.props.LaunchPressed(id);
-    };
+    _onPressItem = (id) => this.props.LaunchPressed(id);
 
-    _onPressNotification = (id) => {
-        this.props.NotificationPressed(id);
-    }
+    _onPressNotification = (id, time) => this.props.NotificationPressed(id, time);
 
-    _renderItem = ({ item }) => (
-        <LaunchListItem
+
+
+    _renderItem = ({ item }) => {
+        return(<LaunchListItem
             id={item.id}
             name={item.name}
             location={item.location.name}
             time={item.isostart}
             onPressItem={this._onPressItem}
             onPressNotification={this._onPressNotification}
-        />
-    );
+            notifications = {this.props.notifications}
+        />)}
 
 
     _loadMore = () => this.props.loadMore();
@@ -56,6 +56,7 @@ export default class LaunchList extends PureComponent {
     }
 
     componentDidUpdate(prevProps, prevState) {
+        
         if (prevState.refreshing === true) {
             this.setState({
                 refreshing: false
@@ -82,12 +83,12 @@ export default class LaunchList extends PureComponent {
     }
 }
 
-class LaunchListItem extends PureComponent {
+class LaunchListItem extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            "time": ""
+            notify: false
         }
     }
 
@@ -96,7 +97,17 @@ class LaunchListItem extends PureComponent {
     }
 
     _onPressNotification = () => {
-        this.props.onPressNotification(this.props.id);
+        this.props.onPressNotification(this.props.id, this.props.time);
+    }
+
+    _hasNotification (id){
+        let hasNotification = this.props.notifications.find(item => item.id == id);
+        if (hasNotification){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
     async componentDidMount(){
@@ -107,8 +118,9 @@ class LaunchListItem extends PureComponent {
         this.setState({
             time: formattedTime
           });
-
     }
+
+
 
     render() {
         return (
@@ -120,6 +132,23 @@ class LaunchListItem extends PureComponent {
                         <LaunchTime>{this.state.time}</LaunchTime>
                     </Card>
                 </CardTouch>
+                <NotifyTouch testID={"NotifyTouch"} onPress={this._onPressNotification}>
+                    {
+                        this.state.notify ? (
+                            <Star
+                                name="star"
+                                size={26}
+                                color="#F5FF00"
+                                iconStyle={{ textAlign: 'right' }}
+                            />) :
+                            (<Star
+                                name="star-o"
+                                size={26}
+                                color="#fff"
+                                iconStyle={{ textAlign: 'right' }}
+                            />)
+                    }
+                </NotifyTouch>
             </CardView>
         )
     }

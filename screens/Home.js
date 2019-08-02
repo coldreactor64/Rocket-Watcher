@@ -4,16 +4,16 @@ import LinearGradient from "react-native-linear-gradient";
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
-
-import merge from 'lodash/merge';
 import NewsList from './Components/NewsList';
 import LaunchList from './Components/LaunchList';
+
+
 import { updateNews, loadMoreNews } from '../redux/actions/newsActions';
 import { updateLaunches, loadMoreLaunches } from '../redux/actions/launchesActions';
+import {addNotification, loadNotifications, removeNotification} from '../redux/actions/notificationActions'
 import AsyncStorage from '@react-native-community/async-storage';
 import PushNotification from "react-native-push-notification";
 
-//import PushNotification from "react-native-push-notification";
 
 class Home extends React.Component {
   constructor() {
@@ -25,9 +25,7 @@ class Home extends React.Component {
 
   async componentDidMount() {
     
-    await AsyncStorage.removeItem("notifications")
-
-    _scheduleNotifications();
+    //await AsyncStorage.removeItem("notifications")
 
     if (Platform.OS === 'android'){
       setTimeout(()=>{
@@ -37,15 +35,19 @@ class Home extends React.Component {
 
     await this.props.updateLaunches();
     await this.props.updateNews();
-
+    await this.props.loadNotifications();
   }
 
   async componentDidUpdate(prevProps, prevState) {
 
   }
 
+
+  //Launch Functions
   _LaunchPressed = (id) => {
+
     let data = this.props.launches.find(item => item.id === id);
+    
     this.props.navigation.navigate("details",{
       data: data,
       name: data.name
@@ -53,8 +55,30 @@ class Home extends React.Component {
 
   }
 
-  _NotificationPressed = async (id) => {
+  _NotificationPressed = async (id, time) => {
+
+    console.log(id)
+    console.log(time);
+
+    let hasNotification = this.props.notifications.find(item => item.id === id);
+
+    if (hasNotification) {
+      this.props.removeNotification(id);
+    }
+    else {
+      this.props.addNotification(id, time);
+    }
   }
+
+  _loadMoreLaunches = () => {
+    this.props.loadMoreLaunches(this.props.launches);
+  }
+
+  _refreshLaunches = () => {
+    this.props.updateLaunches();
+  }
+
+  //News functions
 
   _NewsPressed = (id) => {
     let data = this.props.news.find(item => item._id === id);
@@ -69,13 +93,7 @@ class Home extends React.Component {
     this.props.updateNews();
   }
 
-  _loadMoreLaunches = () => {
-    this.props.loadMoreLaunches(this.props.launches);
-  }
 
-  _refreshLaunches = () => {
-    this.props.updateLaunches();
-  }
 
 
   //TODO: Preload image with componentWillMount() in Home.js
@@ -94,6 +112,7 @@ class Home extends React.Component {
               loadMore={this._loadMoreLaunches}
               refresh={this._refreshLaunches}
               NotificationPressed={this._NotificationPressed}
+              notifications = {this.props.notifications}
             />
           </Outline>
           <Header2> Spaceflight News</Header2>
@@ -180,7 +199,10 @@ connect(mapStateToProps, {
     updateNews,
     loadMoreNews,
     updateLaunches,
-    loadMoreLaunches
+    loadMoreLaunches,
+    loadNotifications,
+    addNotification,
+    removeNotification
   }
 )(Home)
 
