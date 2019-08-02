@@ -77,10 +77,10 @@ export const removeNotification = (id) => async dispatch => {
         deleted = notifications.splice(0, 1);//If index is 0 then you need to splice it 0, 1 not 0,0
     }
     else{
-        deleted = notifications.splice(notificationIndex, 1);
+        deleted = notifications.splice(notificationIndex, 1);//Reminder splice goes splice(index, how many to remove) not splice(index, index)
     }
 
-
+    
     const notificationsString = JSON.stringify(notifications);//Make it a string again
     await AsyncStorage.setItem("notifications", notificationsString);//set it again
 
