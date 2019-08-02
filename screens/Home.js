@@ -16,16 +16,17 @@ import PushNotification from "react-native-push-notification";
 
 
 class Home extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
+      launches : []
     };
   }
 
 
   async componentDidMount() {
     
-    //await AsyncStorage.removeItem("notifications")
+    await AsyncStorage.removeItem("notifications")
 
     if (Platform.OS === 'android'){
       setTimeout(()=>{
@@ -39,11 +40,45 @@ class Home extends React.Component {
   }
 
   async componentDidUpdate(prevProps, prevState) {
+    let currentLaunchData = this.props.launches;
+    let currentNotifications = this.props.notifications;
+
+
+    //Make sure they are never undefined
+    if (currentLaunchData == undefined) { 
+      currentLaunchData = []
+    }
+    if (currentNotifications == undefined) {
+      currentNotifications = []
+    }
+
+    let combinedData = [];
+
+    //Combine the Arrays of JSON
+    for (let i = 0; i < currentLaunchData.length; i++) {
+      combinedData.push({
+        ...currentLaunchData[i],
+        ...(currentNotifications.find((itmInner) => itmInner.id === currentLaunchData[i].id))
+      }
+      );
+    }
+    //Make old statee and new state strings to compare JSON
+    let previousStateString = JSON.stringify(prevState.launches)
+    let combinedDataString = JSON.stringify(combinedData)
+    //Only update if different
+    if (previousStateString !== combinedDataString) {
+      this.setState({
+        'launches': combinedData
+      })
+
+    }
 
   }
 
 
   //Launch Functions
+
+  //navigate to launch details if pressed
   _LaunchPressed = (id) => {
 
     let data = this.props.launches.find(item => item.id === id);
@@ -56,16 +91,11 @@ class Home extends React.Component {
   }
 
   _NotificationPressed = async (id, time) => {
-
-    console.log(id)
-    console.log(time);
-
-    let hasNotification = this.props.notifications.find(item => item.id === id);
-
-    if (hasNotification) {
+    let hasNotification = this.props.notifications.find(item => item.id === id);// Find if it has a notification
+    if (hasNotification) {//if it does remove it
       this.props.removeNotification(id);
     }
-    else {
+    else {//if it doesn't add it
       this.props.addNotification(id, time);
     }
   }
@@ -107,7 +137,7 @@ class Home extends React.Component {
           <Header1>Launch Schedule</Header1>
           <Outline>
           <Calendar
-              data={this.props.launches}
+              data={this.state.launches}
               LaunchPressed={this._LaunchPressed}
               loadMore={this._loadMoreLaunches}
               refresh={this._refreshLaunches}

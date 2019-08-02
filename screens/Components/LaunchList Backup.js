@@ -41,7 +41,8 @@ export default class LaunchList extends PureComponent {
             onPressItem={this._onPressItem}
             onPressNotification={this._onPressNotification}
             notify = {item.notify}
-        />)
+        />
+    );
 
 
     _loadMore = () => this.props.loadMore();
@@ -56,6 +57,7 @@ export default class LaunchList extends PureComponent {
     }
 
     componentDidUpdate(prevProps, prevState) {
+        console.log("updated main")
         if (prevState.refreshing === true) {
             this.setState({
                 refreshing: false
@@ -95,7 +97,14 @@ class LaunchListItem extends PureComponent {
     }
 
     _onPressNotification = () => {
+        console.log(this.props.notify)
         this.props.onPressNotification(this.props.id, this.props.time);
+    }
+
+
+
+    componentDidUpdate(){
+        console.log(`notify: ${this.props.notify}`);
     }
 
     async componentDidMount(){
@@ -107,6 +116,8 @@ class LaunchListItem extends PureComponent {
             time: formattedTime
           });
     }
+
+
 
     render() {
         return (

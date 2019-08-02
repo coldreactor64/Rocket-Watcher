@@ -18,7 +18,8 @@ export const saveNewNotification = async (id, time) => {
 
     const addedNotification =  [{
         id: id,
-        time: time
+        time: time,
+        notify: true
     }]
 
     const newNotifications = currentNotifications.concat(addedNotification);
