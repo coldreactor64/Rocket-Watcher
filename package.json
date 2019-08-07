@@ -10,7 +10,8 @@
     "debug": "react-native run-android --appIdSuffix=debug",
     "release": "react-native run-android --variant release",
     "ios": "react-native run-ios --simulator=\"iPhone X\"",
-    "apk": "cd android && ./gradlew assembleRelease"
+    "apk": "cd android && ./gradlew assembleRelease",
+    "aab": "cd android && ./gradlew bundleRelease"
   },
   "dependencies": {
     "@react-native-community/async-storage": "^1.5.1",

@@ -132,8 +132,8 @@ def getPassword(String currentUser, String keyChain) {
       stdout.toString().trim()
 }
 
-def key_pass = getPassword("Jeremy","android_keystore")
-def store_pass = getPassword("Jeremy","android_keystore")
+def key_pass = getPassword("Jeremy","android_key_password")
+def store_pass = getPassword("Jeremy","android_store_password")
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -151,7 +151,7 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
-        versionName "1.0"
+        versionName "1.1"
     }
 
     splits {

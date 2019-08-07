@@ -41,7 +41,8 @@ export default class LaunchList extends PureComponent {
             onPressItem={this._onPressItem}
             onPressNotification={this._onPressNotification}
             notify = {item.notify}
-        />)
+        />
+    );
 
 
     _loadMore = () => this.props.loadMore();

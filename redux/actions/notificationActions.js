@@ -1,10 +1,15 @@
 import AsyncStorage from '@react-native-community/async-storage';
-
+import PushNotification from "react-native-push-notification";
+import moment from 'moment'
 import {
     ADD_NOTIFICATION,
     LOAD_NOTIFICATION,
     REMOVE_NOTIFICATION
 } from './actionTypes'
+
+//TODO: Also find way to delete notification from async storage after it fires
+
+
 
 /**
  * @function saveNewNotification - Saves new notification
@@ -21,7 +26,7 @@ export const saveNewNotification = async (id, time) => {
         time: time,
         notify: true
     }]
-
+    scheduleNewLocalNotification(addedNotification[0]);
     const newNotifications = currentNotifications.concat(addedNotification);
 
     const notificationsString = JSON.stringify(newNotifications);
@@ -66,7 +71,7 @@ export const readNotifications = async () => {
  * @returns {dispatch} new notification state
  */
 export const removeNotification = (id) => async dispatch => {
-    //TODO: Add removal of that scheduled notification
+    
 
     let notifications = await readNotifications();//Current notifications stored
     let notificationIndex = notifications.findIndex(item => item.id === id); //find the notification to delete's index
@@ -75,6 +80,7 @@ export const removeNotification = (id) => async dispatch => {
 
     if(notificationIndex == 0){
         deleted = notifications.splice(0, 1);//If index is 0 then you need to splice it 0, 1 not 0,0
+        cancelLocalNotification(deleted.id);//Cancel the local notification
     }
     else{
         deleted = notifications.splice(notificationIndex, 1);//Reminder splice goes splice(index, how many to remove) not splice(index, index)
@@ -97,11 +103,28 @@ export const removeNotification = (id) => async dispatch => {
  */
 
 export const loadNotifications = () => async dispatch => {
+    PushNotification.cancelAllLocalNotifications();
     const notifications = await readNotifications();
-    //console.log(`loadNotifications ${notifications}`)
+
+    let updatedNotifications = [];
+
+    for (let i = 0; i < notifications.length; i++) {
+        const currentTime = moment();
+        const notificationTime = moment(notifications[i].time)//Get current and notification time
+
+        if (currentTime.isBefore(notificationTime)){//If the current time is before notification time, we're good
+            updatedNotifications.push(notifications[i]);//Push to array
+            scheduleNewLocalNotification(notifications[i]);//Schedule the local notification
+            console.log(notifications[i]);
+        }
+        else {
+            PushNotification.cancelLocalNotifications({id: notifications[i].id});//else cancel it
+        }
+    }
+
     dispatch({
         type: LOAD_NOTIFICATION,
-        notifications: notifications
+        notifications: updatedNotifications
     });
 
 }
@@ -122,5 +145,29 @@ export const addNotification = (id, time) => async dispatch => {
 
 }
 
+/**
+ * @function scheduleNewLocalNotifications - Schedule 1 new notification locally
+ * @param {Array} newNotification
+ * @returns {void}
+ */
 
+export const scheduleNewLocalNotification = (newNotification) => {
+    const notifdate = moment(newNotification.time).subtract(15, "minutes").toDate();
+    PushNotification.localNotificationSchedule({
+        //... You can use all the options from localNotifications
+        id: newNotification.id, 
+        message: "Upcoming Rocket Launch in 15 minutes!",
+        date: notifdate
+    });
 
+}
+
+/**
+ * @function cancelLocalNotification - Cancels one local notification
+ * @param {string} notificationID
+ * @returns {void}
+ */
+
+export const cancelLocalNotification = (notificationID) =>{
+    PushNotification.cancelLocalNotifications({id: notificationID})
+}

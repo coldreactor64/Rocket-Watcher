@@ -1,14 +1,13 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import {connect} from 'react-redux'
+import {Text, View } from 'react-native';
 class Settings extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {};
   }
 
   async componentDidMount() {
-    console.log(this.props.firebase);
+
   }
 
   render() {
@@ -20,18 +19,8 @@ class Settings extends React.Component {
   }
 }
 
-function mapStateToProps(state) {
-  return {
-    firebase: state.firebase,
-    firestore: state.firestore,
-    todos: state.firestore.ordered.todos
-  };
-}
-export default 
-  connect(mapStateToProps)(Settings)
 
-const styles = StyleSheet.create({
+export default Settings
 
-});
 
 

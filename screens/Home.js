@@ -11,8 +11,7 @@ import LaunchList from './Components/LaunchList';
 import { updateNews, loadMoreNews } from '../redux/actions/newsActions';
 import { updateLaunches, loadMoreLaunches } from '../redux/actions/launchesActions';
 import {addNotification, loadNotifications, removeNotification} from '../redux/actions/notificationActions'
-import AsyncStorage from '@react-native-community/async-storage';
-import PushNotification from "react-native-push-notification";
+
 
 
 class Home extends React.Component {
@@ -26,8 +25,6 @@ class Home extends React.Component {
 
   async componentDidMount() {
     
-    await AsyncStorage.removeItem("notifications")
-
     if (Platform.OS === 'android'){
       setTimeout(()=>{
         NativeModules.ImmersiveMode.enterStickyImmersiveMode();
@@ -124,8 +121,6 @@ class Home extends React.Component {
   }
 
 
-
-
   //TODO: Preload image with componentWillMount() in Home.js
   render() {
     return (
@@ -152,7 +147,6 @@ class Home extends React.Component {
               loadMore={this._loadMoreNews}
               refresh={this._refreshNews}
               data={this.props.news}
-
             />
           </NewsView>
         </Container>
