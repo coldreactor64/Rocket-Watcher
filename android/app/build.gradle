@@ -173,7 +173,7 @@ android {
         {
             storeFile file('rocket-watcher.keystore')
             storePassword System.getenv("APPCENTER_KEYSTORE_PASSWORD")
-            keyAlias System.getenv("APPCENTER_KEY_ALIAS")
+            keyAlias 'rocketwatcher'
             keyPassword System.getenv("APPCENTER_KEY_PASSWORD")
         }
     }
@@ -185,6 +185,7 @@ android {
         release {
             // Caution! In production, you need to generate your own keystore file.
             // see https://facebook.github.io/react-native/docs/signed-apk-android.
+            signingConfig signingConfigs.release
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
