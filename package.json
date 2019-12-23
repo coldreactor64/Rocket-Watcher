@@ -1,5 +1,5 @@
 {
-  "name": "RocketWatcher",
+  "name": "rocketwatcher",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -14,69 +14,45 @@
     "aab": "cd android && ./gradlew bundleRelease"
   },
   "dependencies": {
-    "@react-native-community/async-storage": "^1.5.1",
+    "@react-native-community/async-storage": "^1.7.1",
     "axios": "^0.19.0",
-    "lodash": "^4.17.14",
+    "lodash": "^4.17.15",
     "moment": "^2.24.0",
-    "moment-timezone": "^0.5.26",
-    "react": "16.8.6",
-    "react-native": "0.60.4",
+    "moment-timezone": "^0.5.27",
+    "react": "16.9.0",
+    "react-native": "0.61.5",
     "react-native-device-info": "^2.2.2",
-    "react-native-gesture-handler": "^1.3.0",
-    "react-native-linear-gradient": "^2.5.4",
-    "react-native-push-notification": "^3.1.3",
+    "react-native-gesture-handler": "^1.5.2",
+    "react-native-linear-gradient": "^2.5.6",
+    "react-native-push-notification": "^3.1.9",
+    "react-native-reanimated": "^1.4.0",
     "react-native-vector-icons": "^6.6.0",
-    "react-navigation": "^3.11.1",
-    "react-redux": "^7.1.0",
+    "react-navigation": "^4.0.10",
+    "react-navigation-stack": "^1.10.3",
+    "react-navigation-tabs": "^2.6.2",
+    "react-redux": "^7.1.3",
     "redux": "^4.0.4",
     "redux-thunk": "^2.3.0",
-    "styled-components": "^4.3.2"
+    "styled-components": "^4.4.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.5.5",
-    "@babel/runtime": "^7.5.5",
+    "@babel/core": "^7.6.2",
+    "@babel/runtime": "^7.6.2",
+    "@react-native-community/eslint-config": "^0.0.5",
     "axios-mock-adapter": "^1.17.0",
-    "babel-jest": "^24.8.0",
+    "babel-jest": "^24.9.0",
     "enzyme": "^3.10.0",
-    "enzyme-adapter-react-16": "^1.14.0",
-    "enzyme-to-json": "^3.3.5",
-    "eslint": "^6.0.1",
-    "eslint-config-prettier": "^6.0.0",
-    "eslint-plugin-prettier": "^3.1.0",
-    "eslint-plugin-react": "^7.14.2",
-    "eslint-plugin-react-native": "^3.7.0",
-    "jest": "^24.8.0",
-    "jest-styled-components": "^6.3.3",
-    "metro-react-native-babel-preset": "^0.55.0",
-    "prettier": "^1.18.2",
-    "react-dom": "^16.8.6",
+    "enzyme-adapter-react-16": "^1.15.1",
+    "enzyme-to-json": "^3.4.3",
+    "eslint": "^6.5.1",
+    "jest": "^24.9.0",
+    "jest-styled-components": "^6.3.4",
+    "metro-react-native-babel-preset": "^0.56.0",
+    "react-dom": "^16.12.0",
     "react-native-testing-library": "^1.11.1",
-    "react-test-renderer": "^16.8.6"
+    "react-test-renderer": "16.9.0"
   },
   "jest": {
-    "preset": "react-native",
-    "setupFilesAfterEnv": [
-      "<rootDir>/Jest/testSetup.js",
-      "<rootDir>/Jest/mockAsyncStorage.js",
-      "<rootDir>/Jest/mockDeviceInfo.js"
-    ],
-    "testPathIgnorePatterns": [
-      "<rootDir>/__tests__/helpers/",
-      "<rootDir>/node_modules/"
-    ],
-    "snapshotSerializers": [
-      "enzyme-to-json/serializer"
-    ],
-    "moduleNameMapper": {
-      "styled-components": "<rootDir>/node_modules/styled-components/native/dist/styled-components.native.cjs.js"
-    },
-    "globals": {
-      "window": {}
-    }
-  },
-  "rnpm": {
-    "assets": [
-      "./assets/fonts/"
-    ]
+    "preset": "react-native"
   }
 }

@@ -1,34 +1,29 @@
 import React, {useEffect, useState} from "react"
-import {ImageBackground, NativeModules, Platform} from 'react-native';
+import { Linking, NativeModules, Platform, ImageBackground} from 'react-native';
+import LinearGradient from "react-native-linear-gradient";
+import { compose } from 'redux';
 import { useDispatch, useSelector } from 'react-redux';
 import DeviceInfo from 'react-native-device-info';
 import styled from 'styled-components';
+import LaunchList from './Components/LaunchList';
 
 import { updateNews, loadMoreNews } from '../redux/actions/newsActions';
 import { updateLaunches, loadMoreLaunches } from '../redux/actions/launchesActions';
+import {addNotification, loadNotifications, removeNotification} from '../redux/actions/notificationActions'
 import {CountdownTimer} from './Components/CountdownTimer';
-import {NewsCard} from './Components/NewsCard'
-
-
-
-export const Home = (props) => {
+import {NewNewsList, NewsList} from './Components/NewNewsList'
+export const NewsScreen = (props) => {
 
   const [launchTimeUnix, setLaunchTimeUnix] = useState(1576988222);
   const [timezone, setTimezone] = useState('America/New_York');
   const dispatch = useDispatch();
   const nextLaunch = useSelector(store => store.launches.launches[0]);
-  const newestNews = useSelector(store => store.news.news[0]);
+  const currentNews = useSelector(store => store.news.news);
+  
   useEffect(() => { //On mount, update the current launch
     dispatch(updateLaunches());
     dispatch(updateNews());
     getTimezone();
-
-    if (Platform.OS === 'android'){
-      setTimeout(()=>{
-        NativeModules.ImmersiveMode.enterStickyImmersiveMode();
-      }, 1600)
-    }
-    
   }, [dispatch])
 
   const getTimezone = async () => {
@@ -41,19 +36,11 @@ export const Home = (props) => {
         >
           <Title>Rocket Watcher</Title>
           <TitleLine/>
-          <Container>
-            <Header1>Next Launch</Header1>
-            <Subheader>{nextLaunch.name}</Subheader>
-              <CountdownTimer
-              launchTime = {nextLaunch.isostart}
-              timezone = {timezone}
+
+            <Header1> Spaceflight News </Header1>
+           <NewsList
+              news = {currentNews}
               />
-              <Header2> Spaceflight News</Header2>
-                  <NewsCard
-                  news = {newestNews}
-                  fullscreen = {false}
-                  />
-          </Container>
         </Background>
       );
 
@@ -65,7 +52,8 @@ flex: 1;
 background-color: black;
 align-content: center;
 `
-
+const CardView = styled.View`
+`
 
 const Title = styled.Text`
 text-align: center;
@@ -82,7 +70,6 @@ const TitleLine = styled.View`
   border-bottom-width: 2;
   margin-left: 60;
   margin-right: 60;
-  margin-bottom: 10;
 `
 
 const Header1 = styled.Text`
@@ -90,6 +77,9 @@ text-align: center;
 font-size: 24;
 color: #fff;
 font-family: 'Montserrat-Bold';
+margin-top: 12px;
+margin-bottom: 16px;
+
 `
 
 const Subheader = styled.Text`
