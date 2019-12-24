@@ -1,12 +1,13 @@
 import React from 'react';
-import { Text, View, Image, ScrollView, ImageBackground } from 'react-native';
+import {ImageBackground } from 'react-native';
 import {connect} from 'react-redux'
-import Button from './Components/Button'
 import styled from 'styled-components';
-import LinearGradient from "react-native-linear-gradient";
 import DeviceInfo from 'react-native-device-info';
 import moment from 'moment'
 import tz from 'moment-timezone'
+
+
+//TODO: Update to new functional component (non-rush)
 class LaunchDetails extends React.Component {
   
   constructor() {
@@ -52,7 +53,7 @@ class LaunchDetails extends React.Component {
 
     return (
       <Background
-      source = {require('../assets/images/Background.png')}
+      source = {require('../../assets/images/Background.png')}
       >
         <DescriptionOutline>
             <DescriptionHeader>

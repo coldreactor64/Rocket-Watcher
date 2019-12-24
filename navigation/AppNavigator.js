@@ -3,11 +3,11 @@ import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { Platform } from 'react-native';
-import {Home} from '../screens/Home'
-import LaunchCalendar from '../screens/LaunchCalendar'
+import {Home} from '../screens/Home/Home'
+import {LaunchScreen} from '../screens/Launch/LaunchScreen'
 import Settings from '../screens/Settings'
-import {NewsScreen as News} from '../screens/NewsScreen'
-import LaunchDetails from '../screens/LaunchDetails'
+import {NewsScreen as News} from '../screens/News/NewsScreen'
+import LaunchDetails from '../screens/Launch/LaunchDetails'
 import {Ionicon, FontAwesomeIcon} from './components/TabBarIcons'
 
 const HomeScreen = createStackNavigator({
@@ -31,7 +31,7 @@ HomeScreen.navigationOptions = {
 
 const LaunchCalendarScreen = createStackNavigator({
   launchCalendar: {
-    screen: LaunchCalendar,
+    screen: LaunchScreen,
     navigationOptions:{
       title: "Launch Calendar",
       header: null,

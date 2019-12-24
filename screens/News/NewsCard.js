@@ -4,6 +4,12 @@ import LinearGradient from "react-native-linear-gradient";
 import { TouchableOpacity, Linking } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome5";
 
+
+/**
+ * @function NewsCard - News Card component renders image and info about News Article
+ * @param {*} props - {news, fullscreen}
+ * @returns {ReactNode}
+ */
 export const NewsCard = (props) => {
     
   const timeNow = new Date().getTime() / 1000;

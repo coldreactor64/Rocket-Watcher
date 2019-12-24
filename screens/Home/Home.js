@@ -4,16 +4,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import DeviceInfo from 'react-native-device-info';
 import styled from 'styled-components';
 
-import { updateNews, loadMoreNews } from '../redux/actions/newsActions';
-import { updateLaunches, loadMoreLaunches } from '../redux/actions/launchesActions';
-import {CountdownTimer} from './Components/CountdownTimer';
-import {NewsCard} from './Components/NewsCard'
+import { updateNews, loadMoreNews } from '../../redux/actions/newsActions';
+import { updateLaunches, loadMoreLaunches } from '../../redux/actions/launchesActions';
+import {CountdownTimer} from './CountdownTimer';
+import {NewsCard} from '../News/NewsCard'
 
 
-
+//! TODO: Adjust Styles to look better 
 export const Home = (props) => {
 
-  const [launchTimeUnix, setLaunchTimeUnix] = useState(1576988222);
   const [timezone, setTimezone] = useState('America/New_York');
   const dispatch = useDispatch();
   const nextLaunch = useSelector(store => store.launches.launches[0]);
@@ -37,7 +36,7 @@ export const Home = (props) => {
 
     return (
         <Background
-        source = {require('../assets/images/Background.png')}
+        source = {require('../../assets/images/Background.png')}
         >
           <Title>Rocket Watcher</Title>
           <TitleLine/>
