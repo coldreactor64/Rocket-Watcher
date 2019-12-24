@@ -55,13 +55,14 @@ flex: 1;
 
 const Title = styled.Text`
   color: white;
-  font-weight: bold;
+  font-family: 'Montserrat-Bold';
 `;
 
 const NewsSite = styled.Text`
   color: white;
   margin-top: 2px;
   font-size: 11px;
+  font-family: 'Montserrat-Regular';
 `;
 
 const TextWrapper = styled.View`
@@ -75,8 +76,11 @@ const OverlayText = styled(LinearGradient)`
 
 const Image = styled.ImageBackground`
   height: 250px;
-  width: 100%;
-  align-self: stretch;
+  width: 97%;
+  align-self: center;
+  margin-bottom: 8px;
+  border-radius: 20px;
+  overflow: hidden;
 `;
 
 const PlaceHolderSymbolView = styled.View`

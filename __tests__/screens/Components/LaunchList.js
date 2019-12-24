@@ -3,8 +3,6 @@ import React from 'react'
 import LaunchList from '../../../screens/Components/LaunchList'
 import { render, fireEvent } from 'react-native-testing-library';
 import {launchData, defaultLaunchData} from "../../helpers/launchResponses"
-
-
 import moment from 'moment'
 import tz from 'moment-timezone'
 

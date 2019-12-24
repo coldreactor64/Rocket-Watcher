@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react"
-import {ImageBackground, NativeModules, Platform} from 'react-native';
+import {ImageBackground, Platform} from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import DeviceInfo from 'react-native-device-info';
 import styled from 'styled-components';
@@ -22,11 +22,6 @@ export const Home = (props) => {
     dispatch(updateNews());
     getTimezone();
 
-    if (Platform.OS === 'android'){
-      setTimeout(()=>{
-        NativeModules.ImmersiveMode.enterStickyImmersiveMode();
-      }, 1600)
-    }
     
   }, [dispatch])
 

@@ -88,8 +88,7 @@ SettingsScreen.navigationOptions = {
 const TabNavigator = createBottomTabNavigator({
 HomeScreen,
 LaunchCalendarScreen,
-NewsScreen,
-SettingsScreen
+NewsScreen
 },
 {
   tabBarOptions:{
@@ -98,9 +97,10 @@ SettingsScreen
       borderColor: '#3D24F1'
     },
     labelStyle:{
-      color: '#ff0000',
+      color: '#eeeeee',
       fontSize: 14,
-      marginBottom: 0
+      marginBottom: 0,
+      fontFamily: 'Montserrat-Regular'
     }
   }
 }

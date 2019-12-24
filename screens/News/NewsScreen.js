@@ -5,7 +5,7 @@ import DeviceInfo from 'react-native-device-info';
 import styled from 'styled-components';
 import { updateNews, loadMoreNews } from '../../redux/actions/newsActions';
 import { updateLaunches, loadMoreLaunches } from '../../redux/actions/launchesActions';
-import {NewNewsList, NewsList} from './NewNewsList'
+import {NewNewsList, NewsList} from './NewsList'
 
 /**
  * @function NewsScreen - Base Screen to show Spaceflight News

@@ -50,7 +50,7 @@ export const LaunchCard = (props) => {
     >
       <LaunchOutline
           //TODO: add a onPress = {} event to go to details
-          onPress = {_LaunchPressed(props.launch.id)}
+          onPress = {() => _LaunchPressed(props.launch.id)}
       >
         {!props.launch.rocket.imageURL && (
           <PlaceHolderSymbolView>
@@ -76,18 +76,6 @@ export const LaunchCard = (props) => {
 const LaunchOutline = styled.TouchableOpacity`
 flex: 1;
 `
-
-const Title = styled.Text`
-  color: white;
-  font-weight: bold;
-`;
-
-const NewsSite = styled.Text`
-  color: white;
-  margin-top: 2px;
-  font-size: 11px;
-`;
-
 const TextWrapper = styled.View`
   margin: 10px;
 `;
@@ -99,8 +87,11 @@ const OverlayText = styled(LinearGradient)`
 
 const Image = styled.ImageBackground`
   height: 250px;
-  width: 100%;
+  width: 98%;
   align-self: stretch;
+  margin-bottom: 8px;
+  border-radius: 20px;
+  overflow: hidden;
 `;
 
 const PlaceHolderSymbolView = styled.View`
