@@ -27,6 +27,7 @@
     "react-native-navbar-color": "^1.0.3",
     "react-native-push-notification": "^3.1.9",
     "react-native-reanimated": "^1.4.0",
+    "react-native-splash-screen": "^3.2.0",
     "react-native-vector-icons": "^6.6.0",
     "react-navigation": "^4.0.10",
     "react-navigation-hooks": "^1.1.0",
@@ -41,6 +42,7 @@
   "devDependencies": {
     "@babel/core": "^7.6.2",
     "@babel/runtime": "^7.6.2",
+    "@bam.tech/react-native-make": "0.0.0",
     "@react-native-community/eslint-config": "^0.0.5",
     "axios-mock-adapter": "^1.17.0",
     "babel-jest": "^24.9.0",
