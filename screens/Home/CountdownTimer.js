@@ -3,7 +3,8 @@ import styled from "styled-components";
 import moment from 'moment'
 import tz from 'moment-timezone'
 import DeviceInfo from 'react-native-device-info';
-
+import {TouchableOpacity} from 'react-native'
+import {useNavigation} from 'react-navigation-hooks'
 
 
 export const CountdownTimer = (props) => {
@@ -12,6 +13,7 @@ export const CountdownTimer = (props) => {
   const getTimezone = async () => {
   }
 
+  const { navigate } = useNavigation();
 
   const getTimeUnix = async () => {
     let time = moment(props.launchTime);
@@ -43,6 +45,12 @@ export const CountdownTimer = (props) => {
       setTimeLeft(newTimeLeft);
     }
 
+    const _LaunchPressed = () => {
+      navigate("details",{
+        data: props.launchDetails,
+        name: props.launchDetails.name
+      })
+    }
 
   const seconds = Math.floor(timeLeft / 1000);
   const minutes = Math.floor(seconds / 60);
@@ -50,9 +58,8 @@ export const CountdownTimer = (props) => {
   const days = Math.floor(hours / 24);
   const nullIcon = timeLeft <= 0;
 
-
   return (
-    <Container>
+    <Container onPress = {() => _LaunchPressed()}>
       <UnitContainer>
         <Number>{nullIcon ? ":" : days}</Number>
         <Unit>{`day${days !== 1 ? "s" : ""}`}</Unit>
@@ -74,7 +81,7 @@ export const CountdownTimer = (props) => {
 }
 
 
-const Container = styled.View`
+const Container = styled.TouchableOpacity`
   background: #050957;
   flex-direction: row;
   justify-content: space-around;

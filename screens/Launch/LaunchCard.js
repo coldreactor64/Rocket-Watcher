@@ -8,11 +8,6 @@ import Icon from "react-native-vector-icons/FontAwesome5";
 
 import moment from 'moment'
 import tz from 'moment-timezone'
-import DeviceInfo from 'react-native-device-info';
-
-//TODO: Fix Launch Details onPress event
-
-
 
 /**
  * @function LaunchCard - Interactive Launch Card with basic details
@@ -22,25 +17,20 @@ import DeviceInfo from 'react-native-device-info';
 
 //TODO: extract props from props into {launch, timezone}
 export const LaunchCard = (props) => {
-  const launchList = useSelector(store => store.launches.launches);
+  //Format the time using moment.js
   let timezone = props.timezone;
-  let time = moment(props.launch.time);
+  let time = moment(props.launch.isostart);
   let localTime = time.tz(timezone);
   let formattedTime = localTime.format("dddd, MMMM Do YYYY, h:mm:ss a");
+
   const { navigate } = useNavigation();
 
-
-  const _LaunchPressed = (id) => {
-    console.log("pressed")
-    let data = launchList.find(item => item.id === id);
-    console.log(data);
+  const _LaunchPressed = () => {
     navigate("details",{
-      data: data,
-      name: data.name
+      data: props.launch,
+      name: props.launch.name
     })
-
   }
-
 
   return (
     <Image
@@ -50,7 +40,7 @@ export const LaunchCard = (props) => {
     >
       <LaunchOutline
           //TODO: add a onPress = {} event to go to details
-          onPress = {() => _LaunchPressed(props.launch.id)}
+          onPress = {() => _LaunchPressed()}
       >
         {!props.launch.rocket.imageURL && (
           <PlaceHolderSymbolView>

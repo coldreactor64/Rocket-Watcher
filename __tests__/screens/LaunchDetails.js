@@ -1,5 +1,0 @@
-/*eslint-disable*/
-
-test('should ', () => {
-    
-});

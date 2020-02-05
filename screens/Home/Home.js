@@ -41,6 +41,7 @@ export const Home = (props) => {
               <CountdownTimer
               launchTime = {nextLaunch.isostart}
               timezone = {timezone}
+              launchDetails = {nextLaunch}
               />
               <Header2> Spaceflight News</Header2>
                   <NewsCard

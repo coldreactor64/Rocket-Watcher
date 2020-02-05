@@ -19,7 +19,7 @@ const HomeScreen = createStackNavigator({
       headerBackTitle: "Home"
     }
   },
-  details: {screen: Home}
+  details: {screen: LaunchDetails}
 })
 
 HomeScreen.navigationOptions = {
