@@ -10,7 +10,6 @@ import {CountdownTimer} from './CountdownTimer';
 import {NewsCard} from '../News/NewsCard'
 
 
-//! TODO: Adjust Styles to look better 
 export const Home = (props) => {
 
   const [timezone, setTimezone] = useState('America/New_York');

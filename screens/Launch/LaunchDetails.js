@@ -41,7 +41,6 @@ class LaunchDetails extends React.Component {
   async componentDidMount() {
   }
 
-  //TODO: Preload image with componentWillMount() in LaunchDetails.js
   render() {
 
     let launchData = this.props.navigation.getParam('data');

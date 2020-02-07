@@ -8,7 +8,7 @@ export function Ionicon(props) {
       name={props.name}
       size={26}
       style={{ marginBottom: -3 }}
-      color={props.focused ? '#1B07AB' : '#FFF'}
+      color={props.focused ? '#FFF' : '#1B07AB'}
     />
   );
 }
@@ -19,7 +19,7 @@ export function FontAwesomeIcon(props) {
       name={props.name}
       size={26}
       style={{ marginBottom: -3 }}
-      color={props.focused ? '#1B07AB' : '#FFF'}
+      color={props.focused ? '#FFF' : '#1B07AB'}
     />
   );
 }
