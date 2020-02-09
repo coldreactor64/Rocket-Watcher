@@ -45,7 +45,6 @@ export const readNotifications = async () => {
     try {
 
         const readValue = await AsyncStorage.getItem('notifications')//Read string value
-
         if (readValue !== null) { //If not null return notification string
             currentNotifString = readValue;
         }
@@ -58,8 +57,7 @@ export const readNotifications = async () => {
         console.log(e);
         return [];//if error just return empty JSON Array
     }
-
-    const currentNotificationJSON = JSON.parse(currentNotifString);//Turn string into JSON
+    const currentNotificationJSON = JSON.parse(currentNotifString);//Turn string into JSON    
     return [...currentNotificationJSON]; //Place into an array
 
 }
@@ -105,7 +103,6 @@ export const removeNotification = (id) => async dispatch => {
 export const loadNotifications = () => async dispatch => {
     PushNotification.cancelAllLocalNotifications();
     const notifications = await readNotifications();
-
     let updatedNotifications = [];
 
     for (let i = 0; i < notifications.length; i++) {
@@ -115,7 +112,6 @@ export const loadNotifications = () => async dispatch => {
         if (currentTime.isBefore(notificationTime)){//If the current time is before notification time, we're good
             updatedNotifications.push(notifications[i]);//Push to array
             scheduleNewLocalNotification(notifications[i]);//Schedule the local notification
-            console.log(notifications[i]);
         }
         else {
             PushNotification.cancelLocalNotifications({id: notifications[i].id});//else cancel it

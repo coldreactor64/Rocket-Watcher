@@ -1,4 +1,4 @@
-/* eslint-disable*/
+// /* eslint-disable*/
 
 import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
@@ -94,3 +94,4 @@ describe('loadMoreNews:', () => {
     });
 
 });
+

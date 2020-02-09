@@ -3,10 +3,10 @@ import {
     LOAD_MORE_LAUNCHES
     } from "../actions/actionTypes";
 
-    import {launchData} from './launchResponses'
+    import {initialLaunchData} from './launchResponses'
 
     let initialState = {
-        launches: launchData
+        launches: initialLaunchData
     }
     
     export default (state = initialState, action) => {

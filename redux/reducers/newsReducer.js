@@ -3,10 +3,10 @@ UPDATE_NEWS,
 LOAD_MORE_NEWS
 } from "../actions/actionTypes";
 
-import {newsData} from './newsResponses'
+import {initialNewsData} from './newsResponses'
 
 let initialState = {
-    news: newsData
+    news: initialNewsData
 }
 
 export default (state = initialState, action) => {

@@ -8,8 +8,8 @@ launchGetResponse, launchData
 } from '../../helpers/launchResponses'
 import {updateLaunches, loadMoreLaunches} from '../../../redux/actions/launchesActions'
 
+describe('Update Launches', () => {
 
-describe('updateNews', () => {
     test('Updates store correctly when returned 200 status code', () => {
         const store = storeFactory();
         var mock = new MockAdapter(axios);
@@ -24,8 +24,8 @@ describe('updateNews', () => {
             expect(newState.launches.launches).toEqual(launchData)
             //insert expected state
         })
-
     });
+    
     test('Update store to [] correctly when returns 400 ', () => {
         const store = storeFactory();
         var mock = new MockAdapter(axios);
@@ -37,14 +37,13 @@ describe('updateNews', () => {
         return store.dispatch(updateLaunches())
         .then(()=>{
             const newState = store.getState()
-            expect(newState.news.news).toEqual([])
-            //insert expected state
+            expect(newState.launches.launches).toEqual([])
         })
     });
 });
 
 
-describe('loadMoreNews:', () => {
+describe('Load More Launches:', () => {
     
     test('Updates store correctly when returned 200 status code', () => {
         const store = storeFactory();

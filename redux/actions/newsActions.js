@@ -29,10 +29,18 @@ export const requestNews = async (page) => {
 
 export const updateNews = () => async dispatch => {
   const news = await requestNews(1);
-  dispatch({
-    type: UPDATE_NEWS,
-    news: news
-  });
+  if (news.length === 0) {
+    //if error null out everything
+    dispatch({
+      type: UPDATE_NEWS,
+      news: []
+    });
+  } else {
+    dispatch({
+      type: UPDATE_NEWS,
+      news: news
+    });
+  }
 };
 
 export const loadMoreNews = (news) => async dispatch => {

@@ -28,10 +28,19 @@ export const requestLaunches = async (offset) => {
 
 export const updateLaunches = () => async dispatch => {
   const launches = await requestLaunches(0);
-  dispatch({
-    type: UPDATE_LAUNCHES,
-    launches: launches
-  });
+
+  if (launches.length === 0) {
+    //if error null out everything
+    dispatch({
+      type: UPDATE_LAUNCHES,
+      launches: []
+    });
+  } else {
+    dispatch({
+      type: UPDATE_LAUNCHES,
+      launches: launches
+    });
+  }
 };
 
 export const loadMoreLaunches = (launches) => async dispatch => {

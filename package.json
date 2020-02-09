@@ -58,6 +58,31 @@
     "react-test-renderer": "16.9.0"
   },
   "jest": {
-    "preset": "react-native"
+    "preset": "react-native",
+    "setupFilesAfterEnv": [
+      "<rootDir>/Jest/testSetup.js",
+      "<rootDir>/Jest/mockAsyncStorage.js",
+      "<rootDir>/Jest/mockDeviceInfo.js",
+      "<rootDir>/Jest/mockNotifications.js",
+      "<rootDir>/Jest/mockMoment.js"
+    ],
+    "testPathIgnorePatterns": [
+      "<rootDir>/__tests__/helpers/",
+      "<rootDir>/node_modules/"
+    ],
+    "snapshotSerializers": [
+      "enzyme-to-json/serializer"
+    ],
+    "moduleNameMapper": {
+      "styled-components": "<rootDir>/node_modules/styled-components/native/dist/styled-components.native.cjs.js"
+    },
+    "globals": {
+      "window": {}
+    }
+  },
+  "rnpm": {
+    "assets": [
+      "./assets/fonts/"
+    ]
   }
 }
