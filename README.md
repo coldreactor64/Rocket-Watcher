@@ -8,7 +8,7 @@ A React Native app for tracking when rocket launches occur
 ![Screenshot of main page](https://raw.githubusercontent.com/vulongm/Rocket-Watcher/master/screenshots/main.png)
 ![Screenshot of launch page](https://raw.githubusercontent.com/vulongm/Rocket-Watcher/master/screenshots/launch.png)
 
-## Build
+## Setup
 ```
 $ git clone https://github.com/coldreactor64/Rocket-Watcher.git
 $ cd Rocket-Watcher
