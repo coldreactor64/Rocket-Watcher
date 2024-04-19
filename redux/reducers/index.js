@@ -8,4 +8,4 @@ export default combineReducers({
     launches: launchesReducer,
     news: newsReducer,
     notifications: notificationReducer
-})
+});
